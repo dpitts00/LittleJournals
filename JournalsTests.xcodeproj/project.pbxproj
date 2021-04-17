@@ -9,21 +9,41 @@
 /* Begin PBXBuildFile section */
 		DF054D64261E5BC7002D4B6B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF054D63261E5BC7002D4B6B /* AppDelegate.swift */; };
 		DF054D66261E5BC7002D4B6B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF054D65261E5BC7002D4B6B /* SceneDelegate.swift */; };
-		DF054D68261E5BC7002D4B6B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF054D67261E5BC7002D4B6B /* ViewController.swift */; };
+		DF054D68261E5BC7002D4B6B /* EntriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF054D67261E5BC7002D4B6B /* EntriesViewController.swift */; };
 		DF054D6B261E5BC7002D4B6B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF054D69261E5BC7002D4B6B /* Main.storyboard */; };
 		DF054D6D261E5BC8002D4B6B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF054D6C261E5BC8002D4B6B /* Assets.xcassets */; };
 		DF054D70261E5BC8002D4B6B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF054D6E261E5BC8002D4B6B /* LaunchScreen.storyboard */; };
+		DF054D81261E6951002D4B6B /* JournalsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF054D80261E6951002D4B6B /* JournalsTableViewController.swift */; };
+		DF054D85262012C5002D4B6B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF054D84262012C5002D4B6B /* Extensions.swift */; };
+		DF054D8926202C69002D4B6B /* PagesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF054D8826202C69002D4B6B /* PagesTableViewController.swift */; };
+		DF054D8D26202CFF002D4B6B /* ImagePageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF054D8C26202CFF002D4B6B /* ImagePageCell.swift */; };
+		DF054D9626203E03002D4B6B /* TextPageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF054D9526203E03002D4B6B /* TextPageCell.swift */; };
+		DF054D9D26256E9E002D4B6B /* EntryDateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF054D9C26256E9D002D4B6B /* EntryDateTableViewCell.swift */; };
+		DF054DA426263C44002D4B6B /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF054DA326263C43002D4B6B /* DateCell.swift */; };
+		DF054DA7262827C9002D4B6B /* PageTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF054DA6262827C9002D4B6B /* PageTextCell.swift */; };
+		DF054DAF26282A67002D4B6B /* GridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF054DAE26282A67002D4B6B /* GridViewController.swift */; };
+		DF054DB326288F2B002D4B6B /* PageImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF054DB226288F2B002D4B6B /* PageImageCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		DF054D60261E5BC7002D4B6B /* JournalsTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JournalsTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF054D63261E5BC7002D4B6B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DF054D65261E5BC7002D4B6B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		DF054D67261E5BC7002D4B6B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DF054D67261E5BC7002D4B6B /* EntriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesViewController.swift; sourceTree = "<group>"; };
 		DF054D6A261E5BC7002D4B6B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DF054D6C261E5BC8002D4B6B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DF054D6F261E5BC8002D4B6B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DF054D71261E5BC8002D4B6B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DF054D80261E6951002D4B6B /* JournalsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalsTableViewController.swift; sourceTree = "<group>"; };
+		DF054D84262012C5002D4B6B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		DF054D8826202C69002D4B6B /* PagesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagesTableViewController.swift; sourceTree = "<group>"; };
+		DF054D8C26202CFF002D4B6B /* ImagePageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePageCell.swift; sourceTree = "<group>"; };
+		DF054D9526203E03002D4B6B /* TextPageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextPageCell.swift; sourceTree = "<group>"; };
+		DF054D9C26256E9D002D4B6B /* EntryDateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryDateTableViewCell.swift; sourceTree = "<group>"; };
+		DF054DA326263C43002D4B6B /* DateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
+		DF054DA6262827C9002D4B6B /* PageTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageTextCell.swift; sourceTree = "<group>"; };
+		DF054DAE26282A67002D4B6B /* GridViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewController.swift; sourceTree = "<group>"; };
+		DF054DB226288F2B002D4B6B /* PageImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageImageCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,13 +78,47 @@
 			children = (
 				DF054D63261E5BC7002D4B6B /* AppDelegate.swift */,
 				DF054D65261E5BC7002D4B6B /* SceneDelegate.swift */,
-				DF054D67261E5BC7002D4B6B /* ViewController.swift */,
+				DF054DB9262A8ED1002D4B6B /* ViewControllers */,
+				DF054DB5262A8EC3002D4B6B /* Cells */,
+				DF054DBC262A8EE3002D4B6B /* Extensions */,
 				DF054D69261E5BC7002D4B6B /* Main.storyboard */,
-				DF054D6C261E5BC8002D4B6B /* Assets.xcassets */,
 				DF054D6E261E5BC8002D4B6B /* LaunchScreen.storyboard */,
 				DF054D71261E5BC8002D4B6B /* Info.plist */,
+				DF054D6C261E5BC8002D4B6B /* Assets.xcassets */,
 			);
 			path = JournalsTests;
+			sourceTree = "<group>";
+		};
+		DF054DB5262A8EC3002D4B6B /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				DF054D8C26202CFF002D4B6B /* ImagePageCell.swift */,
+				DF054D9526203E03002D4B6B /* TextPageCell.swift */,
+				DF054DA326263C43002D4B6B /* DateCell.swift */,
+				DF054D9C26256E9D002D4B6B /* EntryDateTableViewCell.swift */,
+				DF054DA6262827C9002D4B6B /* PageTextCell.swift */,
+				DF054DB226288F2B002D4B6B /* PageImageCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		DF054DB9262A8ED1002D4B6B /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				DF054D80261E6951002D4B6B /* JournalsTableViewController.swift */,
+				DF054D67261E5BC7002D4B6B /* EntriesViewController.swift */,
+				DF054D8826202C69002D4B6B /* PagesTableViewController.swift */,
+				DF054DAE26282A67002D4B6B /* GridViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		DF054DBC262A8EE3002D4B6B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DF054D84262012C5002D4B6B /* Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,9 +191,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DF054D68261E5BC7002D4B6B /* ViewController.swift in Sources */,
+				DF054D9626203E03002D4B6B /* TextPageCell.swift in Sources */,
+				DF054DA426263C44002D4B6B /* DateCell.swift in Sources */,
+				DF054D85262012C5002D4B6B /* Extensions.swift in Sources */,
+				DF054D68261E5BC7002D4B6B /* EntriesViewController.swift in Sources */,
+				DF054D81261E6951002D4B6B /* JournalsTableViewController.swift in Sources */,
 				DF054D64261E5BC7002D4B6B /* AppDelegate.swift in Sources */,
+				DF054DB326288F2B002D4B6B /* PageImageCell.swift in Sources */,
+				DF054DA7262827C9002D4B6B /* PageTextCell.swift in Sources */,
+				DF054D8926202C69002D4B6B /* PagesTableViewController.swift in Sources */,
+				DF054DAF26282A67002D4B6B /* GridViewController.swift in Sources */,
+				DF054D8D26202CFF002D4B6B /* ImagePageCell.swift in Sources */,
 				DF054D66261E5BC7002D4B6B /* SceneDelegate.swift in Sources */,
+				DF054D9D26256E9E002D4B6B /* EntryDateTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
