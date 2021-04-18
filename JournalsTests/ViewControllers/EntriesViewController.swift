@@ -7,29 +7,21 @@
 
 import UIKit
 
-struct Entry: Codable, Hashable {
-    var id = UUID().uuidString
-    var title: String
-    var text: String
-    var pages: [Page] = []
-    var date: Date
-}
-
 protocol EntriesViewControllerDelegate {
     func saveJournal(savedJournal: Journal, entryIndex: Int)
 }
 
 class EntriesViewController: UITableViewController, UINavigationControllerDelegate, PagesTableViewControllerDelegate {
     
-    var entries = [Entry]()
+    var entries: [Entry] = []
     var journal: Journal?
     var delegate: EntriesViewControllerDelegate!
     
     var dateFormatter = DateFormatter()
     
     // for the year-sorted sections
-    var years = [Int]()
-    var sortedEntries = [Entry]()
+    var years: [Int] = []
+    var sortedEntries: [Entry] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -179,8 +171,6 @@ class EntriesViewController: UITableViewController, UINavigationControllerDelega
 //        cell.detailTextLabel?.text = entry.date.monthDay() // custom method on Date
 //        return cell
         
-        
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "DateEntryCell", for: indexPath) as! EntryDateTableViewCell // force unwrap okay??
 //        let entry = entries[indexPath.row]
         // this seems VERY COMPUTATIONALLY expensive
@@ -193,21 +183,7 @@ class EntriesViewController: UITableViewController, UINavigationControllerDelega
         cell.dayLabel.text = entry.date.day()
         return cell
         
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "EntryCell", for: indexPath)
-//        let entry = entries[indexPath.row]
-//        cell.textLabel?.text = entry.title
-//        cell.detailTextLabel?.text = entry.text
-//        cell.detailTextLabel?.numberOfLines = 2
-//        return cell
     }
-    
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if let vc = storyboard?.instantiateViewController(withIdentifier: "EditView") as? EditViewController {
-//            vc.delegate = self
-//            vc.entry = entries[indexPath.row]
-//            navigationController?.pushViewController(vc, animated: true)
-//        }
-//    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let vc = storyboard?.instantiateViewController(withIdentifier: "PagesView") as? PagesTableViewController {

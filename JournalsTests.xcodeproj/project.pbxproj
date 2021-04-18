@@ -23,6 +23,9 @@
 		DF054DA7262827C9002D4B6B /* PageTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF054DA6262827C9002D4B6B /* PageTextCell.swift */; };
 		DF054DAF26282A67002D4B6B /* GridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF054DAE26282A67002D4B6B /* GridViewController.swift */; };
 		DF054DB326288F2B002D4B6B /* PageImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF054DB226288F2B002D4B6B /* PageImageCell.swift */; };
+		DFDB2EA2262BED160002BFF1 /* Journal.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDB2EA1262BED160002BFF1 /* Journal.swift */; };
+		DFDB2EA5262BED1D0002BFF1 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDB2EA4262BED1D0002BFF1 /* Entry.swift */; };
+		DFDB2EA8262BED250002BFF1 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDB2EA7262BED250002BFF1 /* Page.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +47,9 @@
 		DF054DA6262827C9002D4B6B /* PageTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageTextCell.swift; sourceTree = "<group>"; };
 		DF054DAE26282A67002D4B6B /* GridViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewController.swift; sourceTree = "<group>"; };
 		DF054DB226288F2B002D4B6B /* PageImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageImageCell.swift; sourceTree = "<group>"; };
+		DFDB2EA1262BED160002BFF1 /* Journal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Journal.swift; sourceTree = "<group>"; };
+		DFDB2EA4262BED1D0002BFF1 /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
+		DFDB2EA7262BED250002BFF1 /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +84,7 @@
 			children = (
 				DF054D63261E5BC7002D4B6B /* AppDelegate.swift */,
 				DF054D65261E5BC7002D4B6B /* SceneDelegate.swift */,
+				DFDB2EA0262BED010002BFF1 /* Models */,
 				DF054DB9262A8ED1002D4B6B /* ViewControllers */,
 				DF054DB5262A8EC3002D4B6B /* Cells */,
 				DF054DBC262A8EE3002D4B6B /* Extensions */,
@@ -119,6 +126,16 @@
 				DF054D84262012C5002D4B6B /* Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		DFDB2EA0262BED010002BFF1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				DFDB2EA1262BED160002BFF1 /* Journal.swift */,
+				DFDB2EA4262BED1D0002BFF1 /* Entry.swift */,
+				DFDB2EA7262BED250002BFF1 /* Page.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -191,11 +208,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFDB2EA5262BED1D0002BFF1 /* Entry.swift in Sources */,
 				DF054D9626203E03002D4B6B /* TextPageCell.swift in Sources */,
+				DFDB2EA8262BED250002BFF1 /* Page.swift in Sources */,
 				DF054DA426263C44002D4B6B /* DateCell.swift in Sources */,
 				DF054D85262012C5002D4B6B /* Extensions.swift in Sources */,
 				DF054D68261E5BC7002D4B6B /* EntriesViewController.swift in Sources */,
 				DF054D81261E6951002D4B6B /* JournalsTableViewController.swift in Sources */,
+				DFDB2EA2262BED160002BFF1 /* Journal.swift in Sources */,
 				DF054D64261E5BC7002D4B6B /* AppDelegate.swift in Sources */,
 				DF054DB326288F2B002D4B6B /* PageImageCell.swift in Sources */,
 				DF054DA7262827C9002D4B6B /* PageTextCell.swift in Sources */,

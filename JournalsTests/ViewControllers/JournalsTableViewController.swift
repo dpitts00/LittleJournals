@@ -7,19 +7,9 @@
 
 import UIKit
 
-struct Journal: Codable, Hashable {
-    var id = UUID().uuidString
-    var title: String
-    var entries: [Entry]
-    // UIColor does not conform to Codable, so use UIColor(named:)
-    // this doesn't work for this one, maybe the preformatting
-    var color = "systemGreen"
-    
-}
-
 class JournalsTableViewController: UITableViewController, EntriesViewControllerDelegate {
     
-    var journals = [Journal]()
+    var journals: [Journal] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,12 +19,8 @@ class JournalsTableViewController: UITableViewController, EntriesViewControllerD
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addJournal))
         
-//        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-//        let addJournalButton = UIBarButtonItem(title: "Add Journal", style: .plain, target: self, action: #selector(addJournal))
-//        toolbarItems = [spacer, addJournalButton]
-//        navigationController?.toolbar.isHidden = false
-        
         loadJournals()
+        
         // just checking journals are all there
 //        for journal in journals {
 //            print(journal.title)
@@ -44,8 +30,8 @@ class JournalsTableViewController: UITableViewController, EntriesViewControllerD
             generateJournals()
         }
         
-        for i in 0..<journals.count {
-            if journals[i].entries.isEmpty {
+        for (i, journal) in journals.enumerated() {
+            if journal.entries.isEmpty {
                 journals[i].entries = generateEntries()
             }
         }
@@ -137,51 +123,6 @@ class JournalsTableViewController: UITableViewController, EntriesViewControllerD
         }
     }
     
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     //    MARK: trailingSwipe...
         override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

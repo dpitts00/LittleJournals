@@ -12,9 +12,9 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
     var dataSource: UICollectionViewDiffableDataSource<Int, Page>! = nil
     var collectionView: UICollectionView! = nil
     
-    var entries = [Entry]()
-    var years = [Int]()
-    var sortedPages = [Page]()
+    var entries: [Entry] = []
+    var years: [Int] = []
+    var sortedPages: [Page] = []
     var appearance = ""
     
     static let sectionHeaderElementKind = "section-header"
@@ -22,8 +22,6 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-                
         entries.sort(by: { $0.date < $1.date })
         
         for entry in entries {
@@ -35,11 +33,13 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
             }
         }
         years.sort()
+        
+        // print to verify contents of entries and population of pages
         print("number of years: \(years.count)")
         print("number of entries: \(entries.count)")
         print("number of pages: \(sortedPages.count)")
         
-        // need to include cover page and maybe years?
+        // FUTURE: need to include cover page and maybe years as section dividers?
         appearance = "grid"
         configureHierarchy()
         configureDataSource()
@@ -50,7 +50,6 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
         let bookButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(exportBook))
         let spacer = UIBarButtonItem(systemItem: .flexibleSpace)
         toolbarItems = [listViewIcon, spacer, gridButton, spacer, pageButton, spacer, bookButton]
-        
         
     }
     
@@ -93,9 +92,7 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
     @objc func exportBook() {
         print("exportBook()")
         // let's make it page view first
-        if appearance == "page" {
-            return
-        } else {
+        if appearance != "page" {
             appearance = "page"
             configureHierarchy()
             configureDataSource()
@@ -130,14 +127,10 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
         if let title = title {
             let url = getDocumentsDirectory().appendingPathComponent(title).appendingPathExtension("pdf")
             try? pdf.write(to: url, options: .noFileProtection)
-        }
         // shares the PDF
-        let shareController = UIActivityViewController(activityItems: [pdf], applicationActivities: [])
-        present(shareController, animated: true)
-        
-        
-        
-        
+            let shareController = UIActivityViewController(activityItems: [title, url], applicationActivities: [])
+            present(shareController, animated: true)
+        }
     }
     
     // MARK: createGridLayout()
@@ -192,18 +185,8 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
     }
     
     func configureHierarchy() {
-//        switch appearance {
-//        case .list:
-//            let layout = createListLayout()
-//            collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
-//        case .grid:
-            let layout = createGridLayout()
-            collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
-//        case .page:
-//            let layout = createPageLayout()
-//            collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
-//        }
-//        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
+        let layout = createGridLayout()
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.backgroundColor = .systemGroupedBackground
         view.addSubview(collectionView)
@@ -240,14 +223,6 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
             cell.layer.cornerRadius = 12
         }
         
-//        let headerRegistration = UICollectionView.SupplementaryRegistration<HeaderFooterSupplementaryView>(elementKind: GridViewController.sectionHeaderElementKind) {
-//            (supplementaryView, string, indexPath) in
-//            supplementaryView.label.text = "\(self.years[indexPath.section])"
-//            supplementaryView.backgroundColor = .systemGroupedBackground
-//            supplementaryView.label.textColor = .darkGray
-//        }
-        
-        
         // MARK: - Data source
         
         dataSource = UICollectionViewDiffableDataSource<Int, Page>(collectionView: collectionView) {
@@ -259,15 +234,11 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
             }
         }
         
-//        dataSource.supplementaryViewProvider = { (view, kind, index) in
-//            return self.collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: index)
-//        }
-//
+        
         var snapshot = NSDiffableDataSourceSnapshot<Int, Page>()
         snapshot.appendSections([0])
         snapshot.appendItems(sortedPages)
         
-            
         dataSource.apply(snapshot, animatingDifferences: true)
         
         

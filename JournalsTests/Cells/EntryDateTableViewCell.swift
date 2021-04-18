@@ -25,8 +25,6 @@ class EntryDateTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
         
-//        dateStackView.layer.borderWidth = 1
-//        dateStackView.layer.borderColor = UIColor.systemGray6.cgColor
         dateStackView.layer.shadowColor = UIColor.systemGray3.cgColor
         dateStackView.layer.shadowOffset = CGSize(width: 1, height: 1)
         dateStackView.layer.shadowOpacity = 1
@@ -37,7 +35,7 @@ class EntryDateTableViewCell: UITableViewCell {
         dayLabel.layer.cornerRadius = 6
         dayLabel.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         dateStackView.layer.cornerRadius = 6
-        
+                
     }
 
 }

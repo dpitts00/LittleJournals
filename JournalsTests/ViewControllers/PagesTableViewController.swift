@@ -7,13 +7,6 @@
 
 import UIKit
 
-struct Page: Codable, Hashable {
-    var id = UUID().uuidString
-    var text: String?
-    var image: String?
-    var pageType: String
-}
-
 protocol PagesTableViewControllerDelegate {
     func saveEntry(savedEntry: Entry)
 }
@@ -57,8 +50,6 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
         navigationItem.backButtonDisplayMode = .minimal
         navigationItem.leftBarButtonItem = self.editButtonItem
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
 
     }
     
@@ -74,8 +65,6 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
     }
     
     @objc func changeEntryDate() {
-        // placeholder for now
-//        showDatePicker()
         print("changeEntryDate")
         isDateEditing = !isDateEditing
 //        tableView.insertSections([1], with: .automatic)
@@ -182,13 +171,8 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
                 print("cell and page exist")
                 var editedPage = page
                 editedPage.text = cell.textView.text
-//                guard page.text != cell.textView.text else { return }
                 saveText(editedPage: editedPage)
-                
-//                cell.textView.isUserInteractionEnabled = false // ??
             }
-            // this work?
-//            tableView.deselectRow(at: entryIndexRow, animated: true)
             
         }
 
@@ -206,12 +190,8 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
 
     func textViewDidEndEditing(_ textView: UITextView) {
         print("textViewDidEndEditing")
-//        savePage()
-//        neither method works here.
-//        doneEditing()
         if textView.text == "" {
             textView.textColor = .placeholderText
-//            textView.text = "Write something!"
         }
         savePage()
     }
@@ -330,9 +310,6 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
             let cell = tableView.dequeueReusableCell(withIdentifier: "DateCell") as! DateCell
             if let date = entry?.date {
                 cell.datePicker.date = date
-//                if let datePicker = cell.datePicker {
-//                    datePicker.addTarget(self, action: #selector(selectDate), for: .valueChanged)
-//                }
                 cell.datePicker?.addTarget(self, action: #selector(selectDate), for: .valueChanged)
                 
             }
@@ -342,12 +319,6 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
         
 //    MARK: didSelectRowAt()
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let pageType = entry?.pages[indexPath.row].pageType
-//        print("you selected " + pageType! + " at: ")
-//        print(indexPath)
-//        tableView.isUserInteractionEnabled = false
-        
-        // to save for previous entryIndex ???
         
         switch entry?.pages[indexPath.row].pageType {
             case "title":
@@ -356,20 +327,8 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
                 print("click Text")
                 
                 if let cell = tableView.cellForRow(at: indexPath) as? TextPageCell {
-//                    cell.textView.isUserInteractionEnabled = true // no?
                     cell.textView.becomeFirstResponder()
-                    /* PUT THIS BACK IF IT DOESN'T WORK
-                    if cell.textView.textColor == .placeholderText {
-                        cell.textView.text = ""
-                        cell.textView.textColor = .label
-                    }
-                    */
-//                    *** MAJOR WORK NEEDS DONE HERE FOR BUGS, AND save() methods ALSO
                     entryIndex = indexPath
-//                    savePage() // ??
-//                    doneEditing() // ??
-//                    cell.textView.resignFirstResponder()
-//                    cell.textView.isUserInteractionEnabled = true // ??? major bugs here before
                 }
                 print(indexPath)
                 
@@ -420,10 +379,6 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
         dismiss(animated: true)
     }
     
-//     this doesn't work as needed
-//    override func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?) {
-//        doneEditing()
-//    }
     
 //    MARK: heightForRowAt()
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -443,13 +398,6 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
         
     }
     
-/*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-*/
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
@@ -472,19 +420,16 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
         }
     }
     
-
-
     
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-        var pages = [Page]()
+        var pages: [Page] = []
         if let entry = entry {
             pages = entry.pages
             let fromPage = entry.pages[fromIndexPath.row]
             let toPage = entry.pages[to.row]
             print(fromPage)
             print(toPage)
-            
             
             for page in entry.pages {
                 if page == fromPage {
@@ -498,10 +443,8 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
             delegate.saveEntry(savedEntry: newEntry)
             
         }
-        
     }
 
-    
     // Override to support conditional rearranging of the table view.
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the item to be re-orderable.

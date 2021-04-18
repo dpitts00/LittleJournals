@@ -21,11 +21,13 @@ class TextPageCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
+        backgroundColor = .systemGroupedBackground
+        
         // Configure the view for the selected state
     }
     
-    //    MARK: Text view methods -- ??
+    //    MARK: Text view methods -- Placeholder Text
         
         func textViewDidBeginEditing(_ textView: UITextView) {
             if textView.textColor == UIColor.placeholderText {
