@@ -29,7 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		DF054D60261E5BC7002D4B6B /* JournalsTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JournalsTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF054D60261E5BC7002D4B6B /* LittleJournals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LittleJournals.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF054D63261E5BC7002D4B6B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DF054D65261E5BC7002D4B6B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		DF054D67261E5BC7002D4B6B /* EntriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesViewController.swift; sourceTree = "<group>"; };
@@ -66,7 +66,7 @@
 		DF054D57261E5BC6002D4B6B = {
 			isa = PBXGroup;
 			children = (
-				DF054D62261E5BC7002D4B6B /* JournalsTests */,
+				DF054D62261E5BC7002D4B6B /* LittleJournals */,
 				DF054D61261E5BC7002D4B6B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -74,12 +74,12 @@
 		DF054D61261E5BC7002D4B6B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DF054D60261E5BC7002D4B6B /* JournalsTests.app */,
+				DF054D60261E5BC7002D4B6B /* LittleJournals.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		DF054D62261E5BC7002D4B6B /* JournalsTests */ = {
+		DF054D62261E5BC7002D4B6B /* LittleJournals */ = {
 			isa = PBXGroup;
 			children = (
 				DF054D63261E5BC7002D4B6B /* AppDelegate.swift */,
@@ -93,7 +93,7 @@
 				DF054D71261E5BC8002D4B6B /* Info.plist */,
 				DF054D6C261E5BC8002D4B6B /* Assets.xcassets */,
 			);
-			path = JournalsTests;
+			path = LittleJournals;
 			sourceTree = "<group>";
 		};
 		DF054DB5262A8EC3002D4B6B /* Cells */ = {
@@ -141,9 +141,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DF054D5F261E5BC7002D4B6B /* JournalsTests */ = {
+		DF054D5F261E5BC7002D4B6B /* LittleJournals */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DF054D74261E5BC8002D4B6B /* Build configuration list for PBXNativeTarget "JournalsTests" */;
+			buildConfigurationList = DF054D74261E5BC8002D4B6B /* Build configuration list for PBXNativeTarget "LittleJournals" */;
 			buildPhases = (
 				DF054D5C261E5BC7002D4B6B /* Sources */,
 				DF054D5D261E5BC7002D4B6B /* Frameworks */,
@@ -153,9 +153,9 @@
 			);
 			dependencies = (
 			);
-			name = JournalsTests;
+			name = LittleJournals;
 			productName = JournalsTests;
-			productReference = DF054D60261E5BC7002D4B6B /* JournalsTests.app */;
+			productReference = DF054D60261E5BC7002D4B6B /* LittleJournals.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -172,7 +172,7 @@
 					};
 				};
 			};
-			buildConfigurationList = DF054D5B261E5BC6002D4B6B /* Build configuration list for PBXProject "JournalsTests" */;
+			buildConfigurationList = DF054D5B261E5BC6002D4B6B /* Build configuration list for PBXProject "LittleJournals" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -185,7 +185,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DF054D5F261E5BC7002D4B6B /* JournalsTests */,
+				DF054D5F261E5BC7002D4B6B /* LittleJournals */,
 			);
 		};
 /* End PBXProject section */
@@ -372,15 +372,16 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = TLM82UG665;
-				INFOPLIST_FILE = JournalsTests/Info.plist;
+				INFOPLIST_FILE = LittleJournals/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.dp.JournalsTests;
+				MARKETING_VERSION = 0.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dp.LittleJournals;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -391,22 +392,23 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = TLM82UG665;
-				INFOPLIST_FILE = JournalsTests/Info.plist;
+				INFOPLIST_FILE = LittleJournals/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.dp.JournalsTests;
+				MARKETING_VERSION = 0.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dp.LittleJournals;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DF054D5B261E5BC6002D4B6B /* Build configuration list for PBXProject "JournalsTests" */ = {
+		DF054D5B261E5BC6002D4B6B /* Build configuration list for PBXProject "LittleJournals" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DF054D72261E5BC8002D4B6B /* Debug */,
@@ -415,7 +417,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DF054D74261E5BC8002D4B6B /* Build configuration list for PBXNativeTarget "JournalsTests" */ = {
+		DF054D74261E5BC8002D4B6B /* Build configuration list for PBXNativeTarget "LittleJournals" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DF054D75261E5BC8002D4B6B /* Debug */,
