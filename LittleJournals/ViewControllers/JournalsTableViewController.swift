@@ -21,21 +21,25 @@ class JournalsTableViewController: UITableViewController, EntriesViewControllerD
         
         loadJournals()
         
+        /*
         // just checking journals are all there
-//        for journal in journals {
-//            print(journal.title)
-//        }
+        for journal in journals {
+            print(journal.title)
+        }
         
+        
+        // removed generating example [Journal]
         if journals.isEmpty {
             generateJournals()
         }
+        
         
         for (i, journal) in journals.enumerated() {
             if journal.entries.isEmpty {
                 journals[i].entries = generateEntries()
             }
         }
-        
+        */
         validateJournals()
        
     }

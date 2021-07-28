@@ -299,7 +299,14 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
                 if let data = try? Data(contentsOf: imageURL) {
                     if let image = UIImage(data: data) {
                         cell.imageView?.image = image
+                        // rounding corners of image here
+                        cell.imageView?.layer.masksToBounds = true
+                        cell.imageView?.layer.shouldRasterize = true // in debate
+                        cell.imageView?.layer.cornerRadius = 12.0
+                        // adding vertical padding around image cell
+                        
                         imageAspectRatio = image.size.height / image.size.width
+                        
                     }
                 }
             }
