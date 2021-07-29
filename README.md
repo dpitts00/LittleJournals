@@ -19,7 +19,7 @@ This is the MVP release of LittleJournals. Features are listed below by each ima
 
 4. Add text or image pages to an entry.
 
-![Adding Pages to an Entry](screens/EditEntryAddPages.png)
+![Adding Pages to an Entry](screens/EditEntryAddPage.png)
 
 5. View all of a journal's pages, either in a scrollable grid or paginated.
 
