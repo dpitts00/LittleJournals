@@ -47,6 +47,7 @@
 		DF054DA6262827C9002D4B6B /* PageTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageTextCell.swift; sourceTree = "<group>"; };
 		DF054DAE26282A67002D4B6B /* GridViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewController.swift; sourceTree = "<group>"; };
 		DF054DB226288F2B002D4B6B /* PageImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageImageCell.swift; sourceTree = "<group>"; };
+		DF34485A26B452260013466E /* TASKS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TASKS.md; sourceTree = "<group>"; };
 		DFDB2EA1262BED160002BFF1 /* Journal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Journal.swift; sourceTree = "<group>"; };
 		DFDB2EA4262BED1D0002BFF1 /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
 		DFDB2EA7262BED250002BFF1 /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
@@ -82,6 +83,7 @@
 		DF054D62261E5BC7002D4B6B /* LittleJournals */ = {
 			isa = PBXGroup;
 			children = (
+				DF34485A26B452260013466E /* TASKS.md */,
 				DF054D63261E5BC7002D4B6B /* AppDelegate.swift */,
 				DF054D65261E5BC7002D4B6B /* SceneDelegate.swift */,
 				DFDB2EA0262BED010002BFF1 /* Models */,
