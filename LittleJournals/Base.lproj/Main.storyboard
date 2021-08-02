@@ -465,6 +465,12 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="u33-FH-EYK"/>
+                    <connections>
+                        <outlet property="entriesScreenImageView" destination="EXY-xt-N54" id="MRr-Ed-EqK"/>
+                        <outlet property="gridScreenImageView" destination="o4s-v3-zee" id="8xb-oi-J9f"/>
+                        <outlet property="journalsScreenImageView" destination="NjR-13-xIK" id="yWU-ke-SPD"/>
+                        <outlet property="pagesScreenImageView" destination="ETU-2K-t9c" id="jH4-cD-AD6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4C4-4D-sSx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
