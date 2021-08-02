@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DF0247DF26B66F120011E482 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0247DE26B66F120011E482 /* InfoViewController.swift */; };
 		DF054D64261E5BC7002D4B6B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF054D63261E5BC7002D4B6B /* AppDelegate.swift */; };
 		DF054D66261E5BC7002D4B6B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF054D65261E5BC7002D4B6B /* SceneDelegate.swift */; };
 		DF054D68261E5BC7002D4B6B /* EntriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF054D67261E5BC7002D4B6B /* EntriesViewController.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DF0247DE26B66F120011E482 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		DF054D60261E5BC7002D4B6B /* LittleJournals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LittleJournals.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF054D63261E5BC7002D4B6B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DF054D65261E5BC7002D4B6B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				DF054D80261E6951002D4B6B /* JournalsTableViewController.swift */,
+				DF0247DE26B66F120011E482 /* InfoViewController.swift */,
 				DF054D67261E5BC7002D4B6B /* EntriesViewController.swift */,
 				DF054D8826202C69002D4B6B /* PagesTableViewController.swift */,
 				DF054DAE26282A67002D4B6B /* GridViewController.swift */,
@@ -218,6 +221,7 @@
 				DF054D68261E5BC7002D4B6B /* EntriesViewController.swift in Sources */,
 				DF054D81261E6951002D4B6B /* JournalsTableViewController.swift in Sources */,
 				DFDB2EA2262BED160002BFF1 /* Journal.swift in Sources */,
+				DF0247DF26B66F120011E482 /* InfoViewController.swift in Sources */,
 				DF054D64261E5BC7002D4B6B /* AppDelegate.swift in Sources */,
 				DF054DB326288F2B002D4B6B /* PageImageCell.swift in Sources */,
 				DF054DA7262827C9002D4B6B /* PageTextCell.swift in Sources */,

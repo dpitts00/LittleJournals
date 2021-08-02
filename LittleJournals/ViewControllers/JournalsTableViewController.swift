@@ -10,16 +10,35 @@ import UIKit
 class JournalsTableViewController: UITableViewController, EntriesViewControllerDelegate {
     
     var journals: [Journal] = []
+//    let purple = UIColor(red: 76/255, green: 30/255, blue: 83/255, alpha: 1.0)
+    let bgColor = UIColor(red: 3/255, green: 110/255, blue: 125/255, alpha: 1.0)
+    let image = UIImage(named: "logo-graphic")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .systemGroupedBackground
-        title = "Journals"
-        navigationController?.navigationBar.prefersLargeTitles = true
+//        view.backgroundColor = .systemGroupedBackground
+        tableView.backgroundColor = bgColor
+        navigationController?.navigationBar.tintColor = bgColor
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.backgroundColor = bgColor
+        
+//        tableView.backgroundColor = .systemPurple
+        
+        title = "Little Journals"
+//        navigationController?.navigationBar.setBackgroundImage(UIImage(systemName: "books.vertical.fill"), for: .default)
+        
+        navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addJournal))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "questionmark.circle"), style: .plain, target: self, action: #selector(showHelpScreen))
         
         loadJournals()
+        
+        if journals.isEmpty {
+            if let vc = storyboard?.instantiateViewController(withIdentifier: "InfoNavigationView") as? UINavigationController {
+                navigationController?.present(vc, animated: true, completion: nil)
+            }
+        }
         
         /*
         // just checking journals are all there
@@ -41,7 +60,18 @@ class JournalsTableViewController: UITableViewController, EntriesViewControllerD
         }
         */
         validateJournals()
-       
+        
+        
+        
+    }
+    
+    @objc func showHelpScreen() {
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "InfoNavigationView") as? UINavigationController {
+            navigationController?.present(vc, animated: true, completion: nil)
+        }
+//        if let vc = storyboard?.instantiateViewController(withIdentifier: "InfoView") as? InfoViewController {
+//            navigationController?.present(vc, animated: true, completion: nil)
+//        }
     }
     
     @objc func addJournal() {
@@ -92,13 +122,44 @@ class JournalsTableViewController: UITableViewController, EntriesViewControllerD
         // change to return journals.count
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        if let headerView = view as? UITableViewHeaderFooterView {
+            headerView.textLabel?.textColor = .white
+            headerView.textLabel?.font = UIFont(name: "Avenir Next", size: 16)
+        }
+    }
+    
+//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        if section == 0 {
+//            if journals.isEmpty {
+//                return "Add a New Journal to Get Started"
+//            }
+//        }
+//        return ""
+//    }
+    
+    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         if section == 0 {
             if journals.isEmpty {
-                return "Add a New Journal to Get Started"
+                return "Add a New Journal to Get Started".uppercased()
             }
         }
         return ""
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return image?.size.height ?? 44
+        if let image = image {
+            return (tableView.frame.width / image.size.width * image.size.height)
+        }
+        return 100
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let imageView = UIImageView()
+        imageView.image = image
+        imageView.tintColor = .white
+        return imageView
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -23,9 +23,12 @@ class EntriesViewController: UITableViewController, UINavigationControllerDelega
     var years: [Int] = []
     var sortedEntries: [Entry] = []
     
+    let bgColor = UIColor(red: 3/255, green: 110/255, blue: 125/255, alpha: 1.0)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemGroupedBackground
+//        view.backgroundColor = .systemGroupedBackground
+        tableView.backgroundColor = bgColor
         
         if let selectedJournal = journal {
             entries = selectedJournal.entries.sorted(by: { $0.date < $1.date })
@@ -43,6 +46,7 @@ class EntriesViewController: UITableViewController, UINavigationControllerDelega
             UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addEntry)),
             UIBarButtonItem(image: UIImage(systemName: "square.grid.2x2"), style: .plain, target: self, action: #selector(displayGrid))
         ]
+        
         
     }
     
@@ -142,9 +146,18 @@ class EntriesViewController: UITableViewController, UINavigationControllerDelega
         return years.count
     }
     
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let headerView = view as? UITableViewHeaderFooterView {
+            headerView.textLabel?.textColor = .white
+            headerView.textLabel?.font = UIFont(name: "Avenir Next", size: 16)
+
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        years.sort()
-        return String(years[section])
+//        years.sort()
+        let year = years.sorted()[section]
+        return String(year)
 //        if section == 0 {
 //            if let journal = journal {
 //                if !journal.entries.isEmpty {

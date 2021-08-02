@@ -13,7 +13,7 @@ protocol PagesTableViewControllerDelegate {
 
 class PagesTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
 
-    
+    let bgColor = UIColor(red: 3/255, green: 110/255, blue: 125/255, alpha: 1.0)
 
     var entry: Entry?
     var delegate: PagesTableViewControllerDelegate!
@@ -23,22 +23,58 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
     
     var doneToolbar: UIToolbar!
     var isDateEditing: Bool = false
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if let entry = entry {
-            title = entry.title + ": " + entry.date.monthDay()
+            // version 2
+            let titleText = entry.title
+            let subtitleText = entry.date.monthDay()
+            let titleAttributes: [NSAttributedString.Key : Any] = [
+                .foregroundColor: bgColor,
+                .font: UIFont(name: "Avenir Next", size: 18)! // ! Fix
+            ]
+            let subtitleAttributes: [NSAttributedString.Key : Any] = [
+                .foregroundColor: bgColor,
+                .font: UIFont(name: "Avenir Next", size: 14)! // ! Fix
+            ]
+            let title = NSMutableAttributedString(string: titleText, attributes: titleAttributes)
+            let subtitle = NSMutableAttributedString(string: subtitleText, attributes: subtitleAttributes)
+            title.append(NSAttributedString(string: "\n"))
+            title.append(subtitle)
+            // ??
+//            let width = view.frame.width // ??
+//            guard let height = navigationController?.navigationBar.frame.size.height else { return } // ??
+            let titleLabel = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.width, height: 44))
+            titleLabel.backgroundColor = .clear
+            titleLabel.attributedText = title
+//            titleLabel.textColor = bgColor
+            titleLabel.numberOfLines = 2
+            titleLabel.textAlignment = NSTextAlignment.center
+            
+            // version 1
+            /*
+            let titleLabel = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.width, height: 44))
+            titleLabel.backgroundColor = .clear
+            titleLabel.textColor = bgColor
+            titleLabel.numberOfLines = 2
+            titleLabel.textAlignment = NSTextAlignment.center
+            titleLabel.text = "\(entry.title) \n \(entry.date.monthDay())"
+            */
+            self.navigationItem.titleView = titleLabel
+            
+//            title = entry.title + ": " + entry.date.monthDay()
         }
         
-        view.backgroundColor = .systemGroupedBackground
+//        view.backgroundColor = .systemGroupedBackground
+        tableView.backgroundColor = bgColor
+        tableView.estimatedRowHeight = UITableView.automaticDimension // why??
         
-        tableView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
         
-        navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(addPage)),
-            UIBarButtonItem(image: UIImage(systemName: "calendar"), style: .plain, target: self, action: #selector(changeEntryDate))
-        ]
+        let composeButton = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(addPage))
+        navigationItem.rightBarButtonItems = [composeButton]
         
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneEditing))
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
@@ -46,13 +82,27 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
         doneToolbar.items = [spacer, doneButton]
         doneToolbar.sizeToFit()
         
-        navigationItem.leftItemsSupplementBackButton = true
+//        navigationItem.leftItemsSupplementBackButton = true
         navigationItem.backButtonDisplayMode = .minimal
-        navigationItem.leftBarButtonItem = self.editButtonItem
+//        navigationItem.backButtonTitle = nil
+//        navigationItem.leftBarButtonItem = self.editButtonItem
         
-
+        // adding toolbar to the bottom
+        let calendarButton = UIBarButtonItem(image: UIImage(systemName: "calendar"), style: .plain, target: self, action: #selector(changeEntryDate))
+        self.toolbarItems = [self.editButtonItem, spacer, calendarButton]
+        navigationController?.toolbar.tintColor = bgColor
+        
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setToolbarHidden(false, animated: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.setToolbarHidden(true, animated: true)
+
+    }
+        
     // called from .addTarget selector
     @IBAction func selectDate(_ sender: UIDatePicker) {
         print("selectDate()")
@@ -234,6 +284,13 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
         }
        return "Pages"
     }
+    
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let headerView = view as? UITableViewHeaderFooterView {
+            headerView.textLabel?.textColor = .white
+            headerView.textLabel?.font = UIFont(name: "Avenir Next", size: 16)
+        }
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isDateEditing {
@@ -246,6 +303,23 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
             return entry?.pages.count ?? 0
         }
         
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = .white
+        /*
+        // masking to create space between all cells
+         let verticalPadding: CGFloat = 8.0
+         let maskLayer = CALayer()
+         maskLayer.cornerRadius = 12.0
+         maskLayer.backgroundColor = CGColor(red: 1, green: 1, blue: 1, alpha: 1)
+         maskLayer.frame = CGRect(x: cell.bounds.origin.x, y: cell.bounds.origin.y, width: cell.bounds.width, height: cell.bounds.height).insetBy(dx: 0, dy: verticalPadding / 2)
+         cell.layer.mask = maskLayer
+        */
+        
+        
+        
+
     }
 
 //    MARK: cellForRowAt()
@@ -298,15 +372,19 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
                 let imageURL = getDocumentsDirectory().appendingPathComponent(image)
                 if let data = try? Data(contentsOf: imageURL) {
                     if let image = UIImage(data: data) {
-                        cell.imageView?.image = image
-                        // rounding corners of image here
-                        cell.imageView?.layer.masksToBounds = true
-                        cell.imageView?.layer.shouldRasterize = true // in debate
-                        cell.imageView?.layer.cornerRadius = 12.0
-                        // adding vertical padding around image cell
+                        
+                        if let cell = cell as? ImagePageCell {
+                            cell.customImageView.image = image
+                            cell.customImageView.layer.masksToBounds = true
+                            cell.customImageView.layer.cornerRadius = 12.0
+                        }
+//                        cell.imageView?.image = image
+//                        // rounding corners of image here
+//                        cell.imageView?.layer.masksToBounds = true
+////                        cell.imageView?.layer.shouldRasterize = true // in debate
+//                        cell.imageView?.layer.cornerRadius = 12.0
                         
                         imageAspectRatio = image.size.height / image.size.width
-                        
                     }
                 }
             }
@@ -388,14 +466,18 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
     
     
 //    MARK: heightForRowAt()
+    /*
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 //         setting height for textView doesn't work like this.
+       
         if (isDateEditing && indexPath.section == 1) || (!isDateEditing && indexPath.section == 0) {
             if entry?.pages[indexPath.row].pageType == "text" {
                 return UITableView.automaticDimension
             }
             if entry?.pages[indexPath.row].pageType == "image" {
-                return (view.frame.width - 15 - 16 - 15 - 16) * imageAspectRatio
+//                return (view.frame.width - 15 - 16 - 15 - 16) * imageAspectRatio + 32
+//                return tableView.frame.width - 62 * imageAspectRatio
+                return UITableView.automaticDimension // returns 0, why?
             } else {
                 return UITableView.automaticDimension
 
@@ -403,7 +485,9 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
         }
         return 60
         
+        return UITableView.automaticDimension
     }
+ */
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
