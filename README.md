@@ -1,5 +1,5 @@
 # LittleJournals
-## LittleJournals app v0.2 (beta), iOS 13.0+.
+## LittleJournals app v0.3 (beta), iOS 13.0+.
 Written in Swift, using UIKit and locally-saved JSON for persistence.
 
 ### v0.2 MVP Release Notes
@@ -23,4 +23,4 @@ This is the MVP release of LittleJournals. Features are listed below by each ima
 
 5. View all of a journal's pages, either in a scrollable grid or paginated. Export as a PDF to print or share.
 
-![Viewing the pages of a journal in grid or paginated format](screens/ViewAsPages.png)
+![Viewing the pages of a journal in grid or paginated format](screens/GridPages.png)
