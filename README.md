@@ -2,8 +2,8 @@
 ## LittleJournals app v0.3 (beta), iOS 13.0+.
 Written in Swift, using UIKit and locally-saved JSON for persistence.
 
-### v0.2 MVP Release Notes
-This is the MVP release of LittleJournals. Features are listed below by each image.
+### v0.3 Release Notes
+This is the latest release of LittleJournals. Features are listed below by each image.
 
 1. The Getting Started page provides an app overview with features and other info, and pops up automatically when the user has no journals added yet.
 
