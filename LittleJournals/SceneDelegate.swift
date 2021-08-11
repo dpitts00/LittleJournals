@@ -34,6 +34,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillResignActive(_ scene: UIScene) {
         // Called when the scene will move from an active state to an inactive state.
         // This may occur due to temporary interruptions (ex. an incoming phone call).
+        
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
@@ -45,8 +46,41 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+        syncJournals()
     }
 
-
+    func getDocumentsDirectory() -> URL {
+        let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        print(url.absoluteString)
+        return url
+    }
+    
+    func iCloudDocumentsDirectory() -> URL? { let url = FileManager.default.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents")
+        print(url?.absoluteString ?? "")
+        return url?.appendingPathComponent("journals").appendingPathExtension(".json")
+    }
+    
+    // identifier nil or the one I use?
+    
+    func syncJournals() {
+        if let iCloudURL = iCloudDocumentsDirectory() {
+            
+            let journalsURL = getDocumentsDirectory().appendingPathComponent("journals").appendingPathExtension(".json")
+            if let data = try? Data(contentsOf: journalsURL) {
+                try? data.write(to: iCloudURL, options: .noFileProtection)
+                print("Data synced from device to iCloud.")
+            }
+        }
+    }
+    
+    func loadSyncedJournals() {
+        if let iCloudURL = iCloudDocumentsDirectory() {
+            let journalsURL = getDocumentsDirectory().appendingPathComponent("journals").appendingPathExtension(".json")
+            if let data = try? Data(contentsOf: iCloudURL) {
+                try? data.write(to: journalsURL, options: .noFileProtection)
+                print("Data synced from iCloud to device.")
+            }
+        }
+    }
 }
 

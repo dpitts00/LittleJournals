@@ -14,6 +14,14 @@ class JournalsTableViewController: UITableViewController, EntriesViewControllerD
     let bgColor = UIColor(red: 3/255, green: 110/255, blue: 125/255, alpha: 1.0)
     let image = UIImage(named: "logo-graphic")
     
+//    override func loadView() {
+//        loadSyncedJournals()
+//    }
+//
+//    override func viewWillDisappear(_ animated: Bool) {
+//        syncJournals()
+//    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,6 +39,8 @@ class JournalsTableViewController: UITableViewController, EntriesViewControllerD
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addJournal))
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "questionmark.circle"), style: .plain, target: self, action: #selector(showHelpScreen))
+        
+        loadSyncedJournals()
         
         loadJournals()
         

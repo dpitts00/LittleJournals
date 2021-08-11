@@ -171,6 +171,28 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
                 self?.tableView.scrollToRow(at: IndexPath(row: lastRow - 1, section: mainSection), at: .top, animated: true)
             }
         })
+        // NEW
+        ac.addAction(UIAlertAction(title: "Gallery Page", style: .default) {
+            [weak self] action in
+            let page = Page(text: nil, image: nil, gallery: nil, pageType: "gallery")
+            // copied this over, same as other pages
+            self?.entry?.pages.append(page)
+            
+            if let entry = self?.entry {
+                self?.delegate.saveEntry(savedEntry: entry)
+            }
+            
+            self?.tableView.reloadData()
+            
+            var mainSection = 0
+            if let lastRow = self?.entry?.pages.count {
+                if self?.isDateEditing == true {
+                    mainSection = 1
+                }
+                self?.tableView.scrollToRow(at: IndexPath(row: lastRow - 1, section: mainSection), at: .top, animated: true)
+            }
+            // is that it?
+        })
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(ac, animated: true)
     }

@@ -64,7 +64,7 @@
                                     <outlet property="textView" destination="mMw-wU-ttb" id="agT-NN-2bd"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImageCell" translatesAutoresizingMaskIntoConstraints="NO" id="m8q-Ql-Zuj" customClass="ImagePageCell" customModule="LittleJournals" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImageCell" translatesAutoresizingMaskIntoConstraints="NO" id="m8q-Ql-Zuj" customClass="ImagePageCell" customModule="LittleJournals" customModuleProvider="target">
                                 <rect key="frame" x="20" y="311" width="374" height="385.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="m8q-Ql-Zuj" translatesAutoresizingMaskIntoConstraints="NO" id="nIw-DG-Vjw">
@@ -129,6 +129,42 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="datePicker" destination="sAU-Yn-CoR" id="LBO-eg-60a"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="GalleryCell" id="neE-sh-Dcr" customClass="DateCell" customModule="LittleJournals" customModuleProvider="target">
+                                <rect key="frame" x="20" y="744" width="374" height="47.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="neE-sh-Dcr" id="qtj-lx-qiL">
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="47.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="4Hb-S2-6Ef">
+                                            <rect key="frame" x="210" y="8" width="144" height="31.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="144" id="Ovm-Q1-NgA"/>
+                                            </constraints>
+                                            <connections>
+                                                <action selector="datePicker:" destination="RuF-Pm-Yd1" eventType="valueChanged" id="EiR-PT-3Xj"/>
+                                            </connections>
+                                        </datePicker>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Entry Date:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="drA-iz-YWI">
+                                            <rect key="frame" x="20" y="13.5" width="170" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="4Hb-S2-6Ef" firstAttribute="top" secondItem="qtj-lx-qiL" secondAttribute="top" constant="8" id="AnE-tD-3gY"/>
+                                        <constraint firstItem="4Hb-S2-6Ef" firstAttribute="leading" secondItem="drA-iz-YWI" secondAttribute="trailing" constant="20" id="BLl-il-4FL"/>
+                                        <constraint firstAttribute="trailing" secondItem="4Hb-S2-6Ef" secondAttribute="trailing" constant="20" id="BSC-zt-AA8"/>
+                                        <constraint firstAttribute="bottom" secondItem="4Hb-S2-6Ef" secondAttribute="bottom" constant="8" id="D6q-8E-2I0"/>
+                                        <constraint firstItem="drA-iz-YWI" firstAttribute="centerY" secondItem="qtj-lx-qiL" secondAttribute="centerY" id="cFl-kH-yZD"/>
+                                        <constraint firstItem="drA-iz-YWI" firstAttribute="leading" secondItem="qtj-lx-qiL" secondAttribute="leadingMargin" id="mEr-dH-3wf"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="datePicker" destination="4Hb-S2-6Ef" id="deh-sC-smg"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

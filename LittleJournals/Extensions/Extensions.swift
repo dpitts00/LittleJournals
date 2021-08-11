@@ -10,9 +10,42 @@ import UIKit
 // MARK: FileManager
 extension UIViewController {
     func getDocumentsDirectory() -> URL {
-        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        print(url.absoluteString)
+        return url
     }
+    
+    func iCloudDocumentsDirectory() -> URL? { let url = FileManager.default.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents")
+        print(url?.absoluteString ?? "")
+        return url?.appendingPathComponent("journals").appendingPathExtension(".json")
+    }
+    
+    // identifier nil or the one I use?
+    
+    func syncJournals() {
+        if let iCloudURL = iCloudDocumentsDirectory() {
+            
+            let journalsURL = getDocumentsDirectory().appendingPathComponent("journals.json")
+            if let data = try? Data(contentsOf: journalsURL) {
+                try? data.write(to: iCloudURL, options: .noFileProtection)
+                print("Data synced from device to iCloud.")
+            }
+        }
+    }
+    
+    func loadSyncedJournals() {
+        if let iCloudURL = iCloudDocumentsDirectory() {
+            let journalsURL = getDocumentsDirectory().appendingPathComponent("journals").appendingPathExtension(".json")
+            if let data = try? Data(contentsOf: iCloudURL) {
+                try? data.write(to: journalsURL, options: .noFileProtection)
+                print("Data synced from iCloud to device.")
+            }
+        }
+    }
+
 }
+
+
 
 // MARK: JournalsTableViewController
 extension JournalsTableViewController {

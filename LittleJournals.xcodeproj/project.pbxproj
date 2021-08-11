@@ -49,6 +49,7 @@
 		DF054DA6262827C9002D4B6B /* PageTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageTextCell.swift; sourceTree = "<group>"; };
 		DF054DAE26282A67002D4B6B /* GridViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewController.swift; sourceTree = "<group>"; };
 		DF054DB226288F2B002D4B6B /* PageImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageImageCell.swift; sourceTree = "<group>"; };
+		DF2FADC426C324740064B920 /* LittleJournals.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LittleJournals.entitlements; sourceTree = "<group>"; };
 		DF34485A26B452260013466E /* TASKS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TASKS.md; sourceTree = "<group>"; };
 		DFDB2EA1262BED160002BFF1 /* Journal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Journal.swift; sourceTree = "<group>"; };
 		DFDB2EA4262BED1D0002BFF1 /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
@@ -85,6 +86,7 @@
 		DF054D62261E5BC7002D4B6B /* LittleJournals */ = {
 			isa = PBXGroup;
 			children = (
+				DF2FADC426C324740064B920 /* LittleJournals.entitlements */,
 				DF34485A26B452260013466E /* TASKS.md */,
 				DF054D63261E5BC7002D4B6B /* AppDelegate.swift */,
 				DF054D65261E5BC7002D4B6B /* SceneDelegate.swift */,
@@ -376,6 +378,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LittleJournals/LittleJournals.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = TLM82UG665;
 				INFOPLIST_FILE = LittleJournals/Info.plist;
@@ -383,7 +386,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.2;
+				MARKETING_VERSION = 0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dp.LittleJournals;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -396,6 +399,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LittleJournals/LittleJournals.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = TLM82UG665;
 				INFOPLIST_FILE = LittleJournals/Info.plist;
@@ -403,7 +407,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.2;
+				MARKETING_VERSION = 0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dp.LittleJournals;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
