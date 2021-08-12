@@ -25,6 +25,7 @@ class PageImageCell: UICollectionViewCell {
     
     func configure() {
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
         contentView.addSubview(imageView)
         
         let inset = CGFloat(4)

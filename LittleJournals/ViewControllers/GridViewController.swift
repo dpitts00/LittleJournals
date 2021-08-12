@@ -16,6 +16,7 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
     var years: [Int] = []
     var sortedPages: [Page] = []
     var appearance = ""
+    var bookSize: CGFloat = 7
     
     static let sectionHeaderElementKind = "section-header"
     
@@ -47,7 +48,7 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
         let listViewIcon = UIBarButtonItem(image: UIImage(systemName: "list.bullet"), style: .plain, target: self, action: #selector(displayList))
         let gridButton = UIBarButtonItem(image: UIImage(systemName: "square.grid.2x2"), style: .plain, target: self, action: #selector(displayGrid))
         let pageButton = UIBarButtonItem(image: UIImage(systemName: "book"), style: .plain, target: self, action: #selector(displayPage))
-        let bookButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(exportBook))
+        let bookButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(pickBookSize))
         let spacer = UIBarButtonItem(systemItem: .flexibleSpace)
         toolbarItems = [listViewIcon, spacer, gridButton, spacer, pageButton, spacer, bookButton]
         
@@ -89,6 +90,24 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
         }
     }
     
+    @objc func pickBookSize() {
+        let ac = UIAlertController(title: "Choose Book Size (inches)", message: "Note: Non-square images will be vertically centered on a page or in a grid cell.", preferredStyle: .actionSheet)
+        ac.addAction(UIAlertAction(title: "8.33 x 8.33 @ 72dpi (digital)", style: .default) { _ in
+            self.bookSize = 3
+            self.exportBook()
+        })
+        ac.addAction(UIAlertAction(title: "7 x 7 @ 300dpi (print)", style: .default) { _ in
+            self.bookSize = 7
+            self.exportBook()
+        })
+        ac.addAction(UIAlertAction(title: "8 x 8 @ 300dpi (print)", style: .default) { _ in
+            self.bookSize = 8
+            self.exportBook()
+        })
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(ac, animated: true)
+    }
+    
     @objc func exportBook() {
         print("exportBook()")
         // let's make it page view first
@@ -98,24 +117,51 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
             configureDataSource()
         }
         
-        let renderer = UIGraphicsPDFRenderer(bounds: CGRect(x: 0, y: 0, width: 600, height: 600))
+        let renderer = UIGraphicsPDFRenderer(bounds: CGRect(x: 0, y: 0, width: 300 * bookSize, height: 300 * bookSize))
         let pdf = renderer.pdfData {
             (context) in
             let attributes: [NSAttributedString.Key : Any] = [
-                .font: UIFont.systemFont(ofSize: 14),
+                .font: UIFont.systemFont(ofSize: 9 * bookSize),
             ]
             for page in sortedPages {
                 context.beginPage()
                 if page.pageType == "text" {
                     if let text = page.text {
-                        text.draw(in: CGRect(x: 20, y: 20, width: 560, height: 560), withAttributes: attributes)
+                        text.draw(in: CGRect(x: 300 * bookSize / 6, y: 300 * bookSize / 6, width: 300 * bookSize / 6 * 4, height: 300 * bookSize / 6 * 4.5), withAttributes: attributes)
                     }
                 } else if page.pageType == "image" {
                     if let image = page.image {
                         let imageURL = self.getDocumentsDirectory().appendingPathComponent(image)
                         if let data = try? Data(contentsOf: imageURL) {
                             if let image = UIImage(data: data) {
-                                image.draw(in: CGRect(x: 0, y: 0, width: 600, height: 600))
+                                let imageHeight = (image.size.height / image.size.width) * (300 * bookSize)
+//                                image.draw(in: CGRect(x: 0, y: 0, width: 300 * bookSize, height: 300 * bookSize))
+                                image.draw(in: CGRect(x: 0, y: ((300 * bookSize) - imageHeight) / 2, width: 300 * bookSize, height: (image.size.height / image.size.width) * (300 * bookSize)))
+                            }
+                        }
+                    }
+                } else if page.pageType == "gallery" {
+                    if !page.gallery.isEmpty {
+                        for (index, image) in page.gallery.enumerated() {
+                            let imageURL = self.getDocumentsDirectory().appendingPathComponent(image)
+                            if let data = try? Data(contentsOf: imageURL) {
+                                if let image = UIImage(data: data) {
+                                    let imageWidth = 300 * bookSize / 2
+                                    let imageInset: CGFloat = 2
+                                    switch index {
+                                    case 0:
+                                        image.draw(in: CGRect(x:0, y: 0, width: imageWidth - imageInset, height: imageWidth - imageInset))
+                                    case 1:
+                                        image.draw(in: CGRect(x: imageWidth + imageInset, y: 0, width: imageWidth - imageInset, height: imageWidth - imageInset))
+                                    case 2:
+                                        image.draw(in: CGRect(x: 0, y: imageWidth + imageInset, width: imageWidth - imageInset, height: imageWidth - imageInset))
+                                    case 3:
+                                        image.draw(in: CGRect(x: imageWidth + imageInset, y: imageWidth + imageInset, width: imageWidth - imageInset, height: imageWidth - imageInset))
+                                    default:
+                                        return
+                                    }
+                                    
+                                }
                             }
                         }
                     }

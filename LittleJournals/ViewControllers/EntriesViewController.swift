@@ -132,6 +132,9 @@ class EntriesViewController: UITableViewController, UINavigationControllerDelega
            let delegate = delegate,
            let entryIndex = entries.firstIndex(where: { $0.id == savedEntry.id }) {
             delegate.saveJournal(savedJournal: journal, entryIndex: entryIndex)
+            // ***KEEP HERE?
+            self.syncJournals()
+
             print(journal.id, journal.title, journal.entries[entryIndex].text)
         }
         

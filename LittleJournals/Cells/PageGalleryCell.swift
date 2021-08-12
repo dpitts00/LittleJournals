@@ -33,6 +33,11 @@ class PageGalleryCell: UICollectionViewCell {
         imageTT.translatesAutoresizingMaskIntoConstraints = false
         imageBL.translatesAutoresizingMaskIntoConstraints = false
         imageBT.translatesAutoresizingMaskIntoConstraints = false
+        imageTL.contentMode = .scaleAspectFit
+        imageTT.contentMode = .scaleAspectFit
+        imageBL.contentMode = .scaleAspectFit
+        imageBT.contentMode = .scaleAspectFit
+
         
 //        imageTL.backgroundColor = .systemGray
 //        imageTT.backgroundColor = .systemGray2

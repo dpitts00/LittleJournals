@@ -25,6 +25,7 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
     var isDateEditing: Bool = false
     var isGallery: Bool = false
     var galleryCellIndex: IndexPath?
+    var galleryGridCell: Int = 0
     
     
     override func viewDidLoad() {
@@ -136,7 +137,7 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
         let ac = UIAlertController(title: "Select a page type:", message: nil, preferredStyle: .actionSheet)
         ac.addAction(UIAlertAction(title: "Text Page", style: .default) {
                 [weak self] action in
-            let page = Page(text: "", image: nil, pageType: "text")
+            let page = Page(id: UUID(), text: "", image: nil, pageType: "text")
             self?.entry?.pages.append(page)
             
             if let entry = self?.entry {
@@ -156,7 +157,7 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
         })
         ac.addAction(UIAlertAction(title: "Image Page", style: .default) {
                 [weak self] action in
-            let page = Page(text: nil, image: nil, pageType: "image")
+            let page = Page(id: UUID(), text: nil, image: nil, pageType: "image")
             self?.entry?.pages.append(page)
             
             if let entry = self?.entry {
@@ -176,13 +177,13 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
         // NEW
         ac.addAction(UIAlertAction(title: "Gallery Page", style: .default) {
             [weak self] action in
-            let page = Page(text: nil, image: nil, gallery: [], pageType: "gallery")
+            // ***COME BACK HERE 0 -- does the gallery mess anything up?
+            let page = Page(id: UUID(), text: nil, image: nil, gallery: ["", "", "", ""], pageType: "gallery")
             // copied this over, same as other pages
             self?.entry?.pages.append(page)
             
             if let entry = self?.entry {
                 self?.delegate.saveEntry(savedEntry: entry)
-                print("saved entry")
             }
             
             self?.tableView.reloadData()
@@ -380,11 +381,12 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
                         image = nil
                     }
                 case "gallery":
-                    print("reached Gallery case for cells")
                     reuseIdentifier = "GalleryCell"
                     text = nil
                     // ***COME BACK HERE 1
                     gallery = page.gallery
+                    
+                    
 //                    if page.gallery != nil {
 //                        gallery = page.gallery
 //                        print("page.gallery != nil, gallery has \(page.gallery.count) items")
@@ -425,8 +427,18 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
                 }
             }
             
+            // && gallery[0] != "" && gallery[1] != "" && gallery[2] != "" && gallery[3] != ""
             if !gallery.isEmpty {
                 // ***MADE IT HERE 3
+                
+                if let cell = cell as? GalleryPageCell {
+                    cell.image1.image = nil
+                    cell.image2.image = nil
+                    cell.image3.image = nil
+                    cell.image4.image = nil
+                    cell.galleryLabel.text = "Pick images..."
+                }
+                
                 for (index, image) in gallery.enumerated() {
                     let imageURL = getDocumentsDirectory().appendingPathComponent(image)
                     if let data = try? Data(contentsOf: imageURL) {
@@ -484,16 +496,69 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
                 print("click Gallery")
                 isGallery = true
                 galleryCellIndex = indexPath
-                let imagePicker = UIImagePickerController()
-                imagePicker.allowsEditing = true
-                imagePicker.sourceType = .photoLibrary
-                imagePicker.delegate = self
-                present(imagePicker, animated: true)
+                
+                
+                
+                selectGridImage()
+                
+                // moved UIImagePicker down to action handler in selectGridImage()
                 
             default:
                 print("default")
             }
  
+    }
+    
+    func selectGridImage() {
+        let ac = UIAlertController(title: "Select a Grid Image", message: nil, preferredStyle: .actionSheet)
+        let topLeadingImage = UIAlertAction(title: "Image 1", style: .default) { _ in
+            self.galleryGridCell = 0
+            let imagePicker = UIImagePickerController()
+            imagePicker.allowsEditing = true
+            imagePicker.sourceType = .photoLibrary
+            imagePicker.delegate = self
+            self.present(imagePicker, animated: true)
+        }
+        let topTrailingImage = UIAlertAction(title: "Image 2", style: .default) { _ in
+            self.galleryGridCell = 1
+            let imagePicker = UIImagePickerController()
+            imagePicker.allowsEditing = true
+            imagePicker.sourceType = .photoLibrary
+            imagePicker.delegate = self
+            self.present(imagePicker, animated: true)
+        }
+        let bottomLeadingImage = UIAlertAction(title: "Image 3", style: .default) { _ in
+            self.galleryGridCell = 2
+            let imagePicker = UIImagePickerController()
+            imagePicker.allowsEditing = true
+            imagePicker.sourceType = .photoLibrary
+            imagePicker.delegate = self
+            self.present(imagePicker, animated: true)
+        }
+        let bottomTrailingImage = UIAlertAction(title: "Image 4", style: .default) { _ in
+            self.galleryGridCell = 3
+            let imagePicker = UIImagePickerController()
+            imagePicker.allowsEditing = true
+            imagePicker.sourceType = .photoLibrary
+            imagePicker.delegate = self
+            self.present(imagePicker, animated: true)
+        }
+        
+        let tlImage = UIImage(systemName: "square.grid.2x2")
+        let ttImage = UIImage(systemName: "square.grid.2x2")
+        let blImage = UIImage(systemName: "square.grid.2x2")
+        let btImage = UIImage(systemName: "square.grid.2x2")
+        topLeadingImage.setValue(tlImage, forKey: "image")
+        topTrailingImage.setValue(ttImage, forKey: "image")
+        bottomLeadingImage.setValue(blImage, forKey: "image")
+        bottomTrailingImage.setValue(btImage, forKey: "image")
+                
+        ac.addAction(topLeadingImage)
+        ac.addAction(topTrailingImage)
+        ac.addAction(bottomLeadingImage)
+        ac.addAction(bottomTrailingImage)
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(ac, animated: true)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -513,7 +578,7 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
                     // ***COME BACK HERE 2
                     // it didn't append the filename to the gallery, still nil
                     print("this is where it should append images...")
-                    page.gallery.append(filename)
+                    page.gallery[galleryGridCell] = filename
                     print(page)
                     saveText(editedPage: page)
                     try? imageData.write(to: fullPath)
@@ -525,6 +590,33 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
             isGallery = false
             return
         }
+        
+        /* // ORIGINAL FOR GALLERY
+         if isGallery {
+             if let index = galleryCellIndex?.row {
+                 print("cell index: ", index)
+                 if let imageData = image.jpegData(compressionQuality: 0.8),
+                    let entry = entry {
+                     var page = entry.pages[index]
+                     let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+                     let filename = imageName + ".jpeg"
+                     let fullPath = documentsDirectory[0].appendingPathComponent(filename)
+                     // ***COME BACK HERE 2
+                     // it didn't append the filename to the gallery, still nil
+                     print("this is where it should append images...")
+                     page.gallery.append(filename)
+                     print(page)
+                     saveText(editedPage: page)
+                     try? imageData.write(to: fullPath)
+                     print("Gallery images for cell: ", page.gallery.count)
+                 }
+             }
+             tableView.reloadData()
+             dismiss(animated: true)
+             isGallery = false
+             return
+         }
+         */
         
         // this might not work, calling selectedRow
         let indexPath = tableView.indexPathForSelectedRow!
@@ -598,7 +690,11 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
                     try? fileManager.removeItem(at: fullPath)
                 }
                 entry?.pages.remove(at: index)
-                
+                // ***ADDED THIS -- good or no???
+                if let entry = entry {
+                    delegate.saveEntry(savedEntry: entry)
+                    self.syncJournals()
+                }
             }
             tableView.deleteRows(at: [indexPath], with: .fade)
         }

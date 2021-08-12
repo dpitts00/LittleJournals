@@ -8,7 +8,7 @@
 import Foundation
 
 struct Page: Codable, Hashable {
-    var id = UUID().uuidString
+    var id: UUID
     var text: String?
     var image: String?
     var gallery: [String] = []
