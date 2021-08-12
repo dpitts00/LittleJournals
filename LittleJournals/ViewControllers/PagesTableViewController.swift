@@ -23,6 +23,8 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
     
     var doneToolbar: UIToolbar!
     var isDateEditing: Bool = false
+    var isGallery: Bool = false
+    var galleryCellIndex: IndexPath?
     
     
     override func viewDidLoad() {
@@ -174,12 +176,13 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
         // NEW
         ac.addAction(UIAlertAction(title: "Gallery Page", style: .default) {
             [weak self] action in
-            let page = Page(text: nil, image: nil, gallery: nil, pageType: "gallery")
+            let page = Page(text: nil, image: nil, gallery: [], pageType: "gallery")
             // copied this over, same as other pages
             self?.entry?.pages.append(page)
             
             if let entry = self?.entry {
                 self?.delegate.saveEntry(savedEntry: entry)
+                print("saved entry")
             }
             
             self?.tableView.reloadData()
@@ -350,6 +353,8 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
             var reuseIdentifier = ""
             var text: String?
             var image: String?
+            // gallery - Optional Array<String> or no?
+            var gallery: [String] = []
             var textColor: UIColor = .label
             
             if let page = entry?.pages[indexPath.row] {
@@ -374,6 +379,19 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
                     } else {
                         image = nil
                     }
+                case "gallery":
+                    print("reached Gallery case for cells")
+                    reuseIdentifier = "GalleryCell"
+                    text = nil
+                    // ***COME BACK HERE 1
+                    gallery = page.gallery
+//                    if page.gallery != nil {
+//                        gallery = page.gallery
+//                        print("page.gallery != nil, gallery has \(page.gallery.count) items")
+//                    } else {
+//                        gallery = nil
+//                        print("page.gallery == nil")
+//                    }
                     
                 default:
                     reuseIdentifier = "TextCell"
@@ -398,15 +416,29 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
                         if let cell = cell as? ImagePageCell {
                             cell.customImageView.image = image
                             cell.customImageView.layer.masksToBounds = true
+                            // shouldRasterize - only if needed for performance
                             cell.customImageView.layer.cornerRadius = 12.0
                         }
-//                        cell.imageView?.image = image
-//                        // rounding corners of image here
-//                        cell.imageView?.layer.masksToBounds = true
-////                        cell.imageView?.layer.shouldRasterize = true // in debate
-//                        cell.imageView?.layer.cornerRadius = 12.0
                         
                         imageAspectRatio = image.size.height / image.size.width
+                    }
+                }
+            }
+            
+            if !gallery.isEmpty {
+                // ***MADE IT HERE 3
+                for (index, image) in gallery.enumerated() {
+                    let imageURL = getDocumentsDirectory().appendingPathComponent(image)
+                    if let data = try? Data(contentsOf: imageURL) {
+                        if let image = UIImage(data: data) {
+                            
+                            if let cell = cell as? GalleryPageCell {
+                                let imageViews = [cell.image1, cell.image2, cell.image3, cell.image4]
+                                imageViews[index]?.image = image
+                                cell.contentView.layer.masksToBounds = true
+                                cell.contentView.layer.cornerRadius = 12.0
+                            }
+                        }
                     }
                 }
             }
@@ -446,6 +478,17 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
                 imagePicker.sourceType = .photoLibrary
                 imagePicker.delegate = self
                 present(imagePicker, animated: true)
+                
+            case "gallery":
+                print("click Gallery")
+                isGallery = true
+                galleryCellIndex = indexPath
+                let imagePicker = UIImagePickerController()
+                imagePicker.allowsEditing = true
+                imagePicker.sourceType = .photoLibrary
+                imagePicker.delegate = self
+                present(imagePicker, animated: true)
+                
             default:
                 print("default")
             }
@@ -454,13 +497,40 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
+        let imageName = UUID().uuidString
+        
+        // inserting for GalleryPageCell here
+        if isGallery {
+            if let index = galleryCellIndex?.row {
+                print("cell index: ", index)
+                if let imageData = image.jpegData(compressionQuality: 0.8),
+                   let entry = entry {
+                    var page = entry.pages[index]
+                    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+                    let filename = imageName + ".jpeg"
+                    let fullPath = documentsDirectory[0].appendingPathComponent(filename)
+                    // ***COME BACK HERE 2
+                    // it didn't append the filename to the gallery, still nil
+                    print("this is where it should append images...")
+                    page.gallery.append(filename)
+                    print(page)
+                    saveText(editedPage: page)
+                    try? imageData.write(to: fullPath)
+                    print("Gallery images for cell: ", page.gallery.count)
+                }
+            }
+            tableView.reloadData()
+            dismiss(animated: true)
+            isGallery = false
+            return
+        }
+        
         // this might not work, calling selectedRow
         let indexPath = tableView.indexPathForSelectedRow!
 //        currentImageView.image = image
 //        entry.pages[currentCell].images?.append(image)
         
         // save the image to .documentsDirectory
-        let imageName = UUID().uuidString
         if let imageData = image.jpegData(compressionQuality: 0.8),
            let entry = entry {
             var page = entry.pages[indexPath.row]

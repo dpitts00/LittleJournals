@@ -24,6 +24,7 @@
 		DF054DA7262827C9002D4B6B /* PageTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF054DA6262827C9002D4B6B /* PageTextCell.swift */; };
 		DF054DAF26282A67002D4B6B /* GridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF054DAE26282A67002D4B6B /* GridViewController.swift */; };
 		DF054DB326288F2B002D4B6B /* PageImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF054DB226288F2B002D4B6B /* PageImageCell.swift */; };
+		DF91CCAB26C3931300AD8C0C /* GalleryPageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF91CCAA26C3931300AD8C0C /* GalleryPageCell.swift */; };
 		DFDB2EA2262BED160002BFF1 /* Journal.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDB2EA1262BED160002BFF1 /* Journal.swift */; };
 		DFDB2EA5262BED1D0002BFF1 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDB2EA4262BED1D0002BFF1 /* Entry.swift */; };
 		DFDB2EA8262BED250002BFF1 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDB2EA7262BED250002BFF1 /* Page.swift */; };
@@ -51,6 +52,7 @@
 		DF054DB226288F2B002D4B6B /* PageImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageImageCell.swift; sourceTree = "<group>"; };
 		DF2FADC426C324740064B920 /* LittleJournals.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LittleJournals.entitlements; sourceTree = "<group>"; };
 		DF34485A26B452260013466E /* TASKS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TASKS.md; sourceTree = "<group>"; };
+		DF91CCAA26C3931300AD8C0C /* GalleryPageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryPageCell.swift; sourceTree = "<group>"; };
 		DFDB2EA1262BED160002BFF1 /* Journal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Journal.swift; sourceTree = "<group>"; };
 		DFDB2EA4262BED1D0002BFF1 /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
 		DFDB2EA7262BED250002BFF1 /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
@@ -105,9 +107,10 @@
 		DF054DB5262A8EC3002D4B6B /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				DF054D8C26202CFF002D4B6B /* ImagePageCell.swift */,
-				DF054D9526203E03002D4B6B /* TextPageCell.swift */,
 				DF054DA326263C43002D4B6B /* DateCell.swift */,
+				DF054D9526203E03002D4B6B /* TextPageCell.swift */,
+				DF054D8C26202CFF002D4B6B /* ImagePageCell.swift */,
+				DF91CCAA26C3931300AD8C0C /* GalleryPageCell.swift */,
 				DF054D9C26256E9D002D4B6B /* EntryDateTableViewCell.swift */,
 				DF054DA6262827C9002D4B6B /* PageTextCell.swift */,
 				DF054DB226288F2B002D4B6B /* PageImageCell.swift */,
@@ -230,6 +233,7 @@
 				DF054D8926202C69002D4B6B /* PagesTableViewController.swift in Sources */,
 				DF054DAF26282A67002D4B6B /* GridViewController.swift in Sources */,
 				DF054D8D26202CFF002D4B6B /* ImagePageCell.swift in Sources */,
+				DF91CCAB26C3931300AD8C0C /* GalleryPageCell.swift in Sources */,
 				DF054D66261E5BC7002D4B6B /* SceneDelegate.swift in Sources */,
 				DF054D9D26256E9E002D4B6B /* EntryDateTableViewCell.swift in Sources */,
 			);

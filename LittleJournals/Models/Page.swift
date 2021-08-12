@@ -11,6 +11,6 @@ struct Page: Codable, Hashable {
     var id = UUID().uuidString
     var text: String?
     var image: String?
-    var gallery: [String]?
+    var gallery: [String] = []
     var pageType: String
 }
