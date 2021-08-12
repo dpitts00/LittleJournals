@@ -7,6 +7,8 @@
 
 import UIKit
 
+// ***Does any of this need to remain?? These classes are not used.
+
 class PageImageCell: UICollectionViewCell {
     static let reuseIdentifier = "page-image-cell-reuse-identifier"
     let imageView = UIImageView()

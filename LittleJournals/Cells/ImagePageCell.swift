@@ -14,6 +14,9 @@ class ImagePageCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        // does this make a difference?
+        self.contentView.layer.masksToBounds = true
+        self.contentView.layer.cornerRadius = 12.0
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -433,6 +433,7 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
                         if let image = UIImage(data: data) {
                             
                             if let cell = cell as? GalleryPageCell {
+                                cell.galleryLabel.text = nil
                                 let imageViews = [cell.image1, cell.image2, cell.image3, cell.image4]
                                 imageViews[index]?.image = image
                                 cell.contentView.layer.masksToBounds = true

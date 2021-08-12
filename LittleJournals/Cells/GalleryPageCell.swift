@@ -19,11 +19,14 @@ class GalleryPageCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        image1.backgroundColor = .systemRed
-        image2.backgroundColor = .systemBlue
-        image3.backgroundColor = .systemGreen
-        image4.backgroundColor = .systemYellow
+        
+        // does this make a difference? no?
+//        self.contentView.layer.masksToBounds = true
+//        self.contentView.layer.cornerRadius = 12.0
+        
+        // but this does, dealing with subviews directly -- this is the vertical stack view
+        self.contentView.subviews[1].layer.masksToBounds = true
+        self.contentView.subviews[1].layer.cornerRadius = 12.0
         
     }
 
