@@ -14,6 +14,8 @@ struct Journal: Codable, Hashable {
     // UIColor does not conform to Codable, so use UIColor(named:)
     // this doesn't work for this one, maybe the preformatting
     // revert to hex/rgb conversions for JSON, seems to be standard
+    // will need for web/mobile consistency
     var color = "systemGreen"
+    var lastModified: Date = Date()
     
 }

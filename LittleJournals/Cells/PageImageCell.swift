@@ -27,7 +27,7 @@ class PageImageCell: UICollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(imageView)
         
-        let inset = CGFloat(10)
+        let inset = CGFloat(4)
         NSLayoutConstraint.activate([
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: inset),
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: inset),

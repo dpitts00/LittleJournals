@@ -110,8 +110,12 @@ class JournalsTableViewController: UITableViewController, EntriesViewControllerD
     }
         
     func saveJournal(savedJournal: Journal, entryIndex: Int) {
+        // ***WIP updating lastModified, but for a struct
+        var journalLastModified = savedJournal
+        journalLastModified.lastModified = Date()
+        
         if let index = journals.firstIndex(where: { $0.id == savedJournal.id }) {
-            journals[index] = savedJournal
+            journals[index] = journalLastModified // instead of savedJournal
             print(journals[index].id, journals[index].title, journals[index].entries[entryIndex].text)
         } else {
             journals.append(savedJournal)
@@ -236,6 +240,7 @@ class JournalsTableViewController: UITableViewController, EntriesViewControllerD
             [weak self, weak ac] action in
             if let title = ac?.textFields?[0].text {
                 journal.title = title
+                journal.lastModified = Date()
                 self?.saveJournal(savedJournal: journal, entryIndex: 0)
                 self?.tableView.reloadRows(at: [indexPath], with: .none)
                 // what animation works best here?

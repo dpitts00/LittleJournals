@@ -33,12 +33,23 @@ extension UIViewController {
         }
     }
     
+    // ***Need to verify that this works.
+    
     func loadSyncedJournals() {
         if let iCloudURL = iCloudDocumentsDirectory() {
             let journalsURL = getDocumentsDirectory().appendingPathComponent("journals").appendingPathExtension(".json")
-            if let data = try? Data(contentsOf: iCloudURL) {
-                try? data.write(to: journalsURL, options: .noFileProtection)
-                print("Data synced from iCloud to device.")
+            if let data = try? Data(contentsOf: iCloudURL),
+               let deviceData = try? Data(contentsOf: journalsURL) {
+                // ensure it won't overwrite if lastModified is <
+                if let syncedJournal = try? JSONDecoder().decode(Journal.self, from: data),
+                   let deviceJournal = try? JSONDecoder().decode(Journal.self, from: deviceData) {
+                    if syncedJournal.lastModified > deviceJournal.lastModified  || deviceJournal.entries.isEmpty {
+                        try? data.write(to: journalsURL, options: .noFileProtection)
+                        print("Data synced from iCloud to device.")
+                    } else {
+                        print("Device already updated to current file.")
+                    }
+                }
             }
         }
     }
@@ -56,6 +67,8 @@ extension JournalsTableViewController {
         if let encodedData = try? encoder.encode(journals) {
             try? encodedData.write(to: journalsURL, options: .noFileProtection)
         }
+        // added here. Is it efficient?
+        syncJournals()
     }
     
     func loadJournals() {

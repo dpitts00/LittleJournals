@@ -25,13 +25,14 @@ class PageTextCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
+        
         contentView.addSubview(label)
         
-        let inset = CGFloat(10)
+        let inset = CGFloat(16)
         NSLayoutConstraint.activate([
             label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: inset),
             label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: inset),
-            label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -inset),
+//            label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -inset),
             label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -inset),
         ])
     }

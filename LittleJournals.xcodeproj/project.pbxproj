@@ -25,6 +25,7 @@
 		DF054DAF26282A67002D4B6B /* GridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF054DAE26282A67002D4B6B /* GridViewController.swift */; };
 		DF054DB326288F2B002D4B6B /* PageImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF054DB226288F2B002D4B6B /* PageImageCell.swift */; };
 		DF91CCAB26C3931300AD8C0C /* GalleryPageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF91CCAA26C3931300AD8C0C /* GalleryPageCell.swift */; };
+		DF91CCAD26C56A7700AD8C0C /* PageGalleryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF91CCAC26C56A7700AD8C0C /* PageGalleryCell.swift */; };
 		DFDB2EA2262BED160002BFF1 /* Journal.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDB2EA1262BED160002BFF1 /* Journal.swift */; };
 		DFDB2EA5262BED1D0002BFF1 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDB2EA4262BED1D0002BFF1 /* Entry.swift */; };
 		DFDB2EA8262BED250002BFF1 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDB2EA7262BED250002BFF1 /* Page.swift */; };
@@ -53,6 +54,7 @@
 		DF2FADC426C324740064B920 /* LittleJournals.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LittleJournals.entitlements; sourceTree = "<group>"; };
 		DF34485A26B452260013466E /* TASKS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TASKS.md; sourceTree = "<group>"; };
 		DF91CCAA26C3931300AD8C0C /* GalleryPageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryPageCell.swift; sourceTree = "<group>"; };
+		DF91CCAC26C56A7700AD8C0C /* PageGalleryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageGalleryCell.swift; sourceTree = "<group>"; };
 		DFDB2EA1262BED160002BFF1 /* Journal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Journal.swift; sourceTree = "<group>"; };
 		DFDB2EA4262BED1D0002BFF1 /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
 		DFDB2EA7262BED250002BFF1 /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				DF054D9C26256E9D002D4B6B /* EntryDateTableViewCell.swift */,
 				DF054DA6262827C9002D4B6B /* PageTextCell.swift */,
 				DF054DB226288F2B002D4B6B /* PageImageCell.swift */,
+				DF91CCAC26C56A7700AD8C0C /* PageGalleryCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -220,6 +223,7 @@
 			files = (
 				DFDB2EA5262BED1D0002BFF1 /* Entry.swift in Sources */,
 				DF054D9626203E03002D4B6B /* TextPageCell.swift in Sources */,
+				DF91CCAD26C56A7700AD8C0C /* PageGalleryCell.swift in Sources */,
 				DFDB2EA8262BED250002BFF1 /* Page.swift in Sources */,
 				DF054DA426263C44002D4B6B /* DateCell.swift in Sources */,
 				DF054D85262012C5002D4B6B /* Extensions.swift in Sources */,

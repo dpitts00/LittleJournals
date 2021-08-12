@@ -223,12 +223,35 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
             cell.layer.cornerRadius = 12
         }
         
+        // HERE!***
+        // MARK: galleryCellRegistration
+        
+        let galleryCellRegistration = UICollectionView.CellRegistration<PageGalleryCell, Page> { (cell, indexPath, page) in
+            // cell = PageGalleryCell, page = page
+            cell.backgroundColor = .systemBackground
+            if !page.gallery.isEmpty {
+                for (index, image) in page.gallery.enumerated() {
+                    let imageURL = self.getDocumentsDirectory().appendingPathComponent(image)
+                    if let data = try? Data(contentsOf: imageURL) {
+                        if let image = UIImage(data: data) {
+                            let imageViews = [cell.imageTL, cell.imageTT, cell.imageBL, cell.imageBT]
+                            imageViews[index].image = image
+                        }
+                    }
+                }
+            }
+            
+            cell.layer.cornerRadius = 12
+        }
+        
         // MARK: - Data source
         
         dataSource = UICollectionViewDiffableDataSource<Int, Page>(collectionView: collectionView) {
             (collectionView: UICollectionView, indexPath: IndexPath, page: Page) -> UICollectionViewCell? in
             if page.pageType == "image" {
                 return collectionView.dequeueConfiguredReusableCell(using: imageCellRegistration, for: indexPath, item: page)
+            } else if page.pageType == "gallery" {
+                return collectionView.dequeueConfiguredReusableCell(using: galleryCellRegistration, for: indexPath, item: page)
             } else {
                 return collectionView.dequeueConfiguredReusableCell(using: textCellRegistration, for: indexPath, item: page)
             }
