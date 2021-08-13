@@ -18,13 +18,18 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
     var appearance = ""
     var bookSize: CGFloat = 7
     
+    var titleColor: UIColor = .white
+    var coverTitle: String = ""
+    var coverImage: String = ""
+    
     static let sectionHeaderElementKind = "section-header"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         entries.sort(by: { $0.date < $1.date })
-        
+        // ***COME BACK HERE
+        sortedPages.append(Page(id: UUID(), pageType: "cover"))
         for entry in entries {
             if !years.contains(entry.date.year()) {
                 years.append(entry.date.year())
@@ -34,11 +39,6 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
             }
         }
         years.sort()
-        
-        // print to verify contents of entries and population of pages
-        print("number of years: \(years.count)")
-        print("number of entries: \(entries.count)")
-        print("number of pages: \(sortedPages.count)")
         
         // FUTURE: need to include cover page and maybe years as section dividers?
         appearance = "grid"
@@ -69,7 +69,6 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
     }
     
     @objc func displayGrid() {
-        print("displayGrid()")
         if appearance == "grid" {
             return
         } else {
@@ -80,7 +79,6 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
     }
     
     @objc func displayPage() {
-        print("displayPage()")
         if appearance == "page" {
             return
         } else {
@@ -109,7 +107,6 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
     }
     
     @objc func exportBook() {
-        print("exportBook()")
         // let's make it page view first
         if appearance != "page" {
             appearance = "page"
@@ -123,6 +120,26 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
             let attributes: [NSAttributedString.Key : Any] = [
                 .font: UIFont.systemFont(ofSize: 9 * bookSize),
             ]
+            
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = .center
+            
+            let titleAttributes: [NSAttributedString.Key : Any] = [
+                .font: UIFont.systemFont(ofSize: 24 * bookSize, weight: .bold),
+                .foregroundColor: titleColor,
+                .paragraphStyle: paragraphStyle,
+            ]
+            
+            context.beginPage()
+            let imageURL = self.getDocumentsDirectory().appendingPathComponent(coverImage)
+            if let data = try? Data(contentsOf: imageURL) {
+                if let image = UIImage(data: data) {
+                    let imageHeight = (image.size.height / image.size.width) * (300 * bookSize)
+                    image.draw(in: CGRect(x: 0, y: ((300 * bookSize) - imageHeight) / 2, width: 300 * bookSize, height: (image.size.height / image.size.width) * (300 * bookSize)))
+                    coverTitle.draw(in: CGRect(x: 0, y: 300 * bookSize - (24 * bookSize) - (40 * bookSize), width: 300 * bookSize, height: 24 * bookSize), withAttributes: titleAttributes)
+                }
+            }
+            
             for page in sortedPages {
                 context.beginPage()
                 if page.pageType == "text" {
@@ -290,16 +307,35 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
             cell.layer.cornerRadius = 12
         }
         
+        let coverCellRegistration = UICollectionView.CellRegistration<JournalCoverCell, Page> {
+            (cell, indexPath, page) in
+            cell.backgroundColor = .systemBackground
+            
+            let imageURL = self.getDocumentsDirectory().appendingPathComponent(self.coverImage)
+            if let data = try? Data(contentsOf: imageURL) {
+                if let image = UIImage(data: data) {
+                    cell.imageView.image = image
+                }
+            }
+            
+            cell.label.text = self.coverTitle
+            cell.label.textColor = self.titleColor
+            
+            cell.layer.cornerRadius = 12
+        }
+        
         // MARK: - Data source
         
         dataSource = UICollectionViewDiffableDataSource<Int, Page>(collectionView: collectionView) {
             (collectionView: UICollectionView, indexPath: IndexPath, page: Page) -> UICollectionViewCell? in
-            if page.pageType == "image" {
+            if page.pageType == "text" {
+                return collectionView.dequeueConfiguredReusableCell(using: textCellRegistration, for: indexPath, item: page)
+            } else if page.pageType == "image" {
                 return collectionView.dequeueConfiguredReusableCell(using: imageCellRegistration, for: indexPath, item: page)
             } else if page.pageType == "gallery" {
                 return collectionView.dequeueConfiguredReusableCell(using: galleryCellRegistration, for: indexPath, item: page)
             } else {
-                return collectionView.dequeueConfiguredReusableCell(using: textCellRegistration, for: indexPath, item: page)
+                return collectionView.dequeueConfiguredReusableCell(using: coverCellRegistration, for: indexPath, item: page)
             }
         }
         

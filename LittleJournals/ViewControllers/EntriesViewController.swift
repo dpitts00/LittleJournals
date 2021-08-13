@@ -27,7 +27,7 @@ class EntriesViewController: UITableViewController, UINavigationControllerDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        view.backgroundColor = .systemGroupedBackground
+        
         tableView.backgroundColor = bgColor
         
         if let selectedJournal = journal {
@@ -38,7 +38,6 @@ class EntriesViewController: UITableViewController, UINavigationControllerDelega
                 }
             }
             years.sort()
-            print(years)
         }
         validateEntries()
         
@@ -47,16 +46,16 @@ class EntriesViewController: UITableViewController, UINavigationControllerDelega
             UIBarButtonItem(image: UIImage(systemName: "square.grid.2x2"), style: .plain, target: self, action: #selector(displayGrid))
         ]
         
-        
     }
     
     @objc func displayGrid() {
-        print("displayGrid")
-        // send to new VC with collectionView
-        // send years, entriesForYear?, entries?, journal (for title AND entries)
         if let vc = storyboard?.instantiateViewController(withIdentifier: "GridView") as? GridViewController {
             vc.entries = entries
             vc.title = journal?.title
+            vc.titleColor = UIColor(red: journal?.red ?? 0, green: journal?.green ?? 0, blue: journal?.blue ?? 0, alpha: 1.0)
+            vc.coverTitle = journal?.coverTitle ?? journal?.title ?? ""
+            vc.coverImage = journal?.coverImage ?? ""
+            
             navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -89,10 +88,9 @@ class EntriesViewController: UITableViewController, UINavigationControllerDelega
             if let title = ac?.textFields?[0].text {
                 let newEntry = Entry(title: title, text: "", date: Date())
                 self?.saveEntry(savedEntry: newEntry)
-                // new part
+
                 if let vc = self?.storyboard?.instantiateViewController(withIdentifier: "PagesView") as? PagesTableViewController {
                     vc.delegate = self
-//                    vc.entry = entries[indexPath.row]
                     vc.entry = newEntry
                     self?.navigationController?.pushViewController(vc, animated: true)
                 }
@@ -104,14 +102,13 @@ class EntriesViewController: UITableViewController, UINavigationControllerDelega
     }
     
     func saveEntry(savedEntry: Entry) {
-        print("saveEntry()")
         if let index = entries.firstIndex(where: { $0.id == savedEntry.id }) {
             entries[index] = savedEntry
         } else {
             entries.append(savedEntry)
         }
         
-        // remove unused years - WIP
+        // remove unused years
         for year in years {
             if entries.filter({ $0.date.year() == year }).isEmpty {
                 if let index = years.firstIndex(of: year) {
@@ -132,12 +129,9 @@ class EntriesViewController: UITableViewController, UINavigationControllerDelega
            let delegate = delegate,
            let entryIndex = entries.firstIndex(where: { $0.id == savedEntry.id }) {
             delegate.saveJournal(savedJournal: journal, entryIndex: entryIndex)
-            // ***KEEP HERE?
-            self.syncJournals()
 
-            print(journal.id, journal.title, journal.entries[entryIndex].text)
+            self.syncJournals()
         }
-        
         
         tableView.reloadData()
     }
@@ -145,7 +139,6 @@ class EntriesViewController: UITableViewController, UINavigationControllerDelega
 //    MARK: Tableview Data Source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-//        return 1
         return years.count
     }
     
@@ -158,19 +151,8 @@ class EntriesViewController: UITableViewController, UINavigationControllerDelega
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        years.sort()
         let year = years.sorted()[section]
         return String(year)
-//        if section == 0 {
-//            if let journal = journal {
-//                if !journal.entries.isEmpty {
-//                    return "Entries for \(journal.title)"
-//                } else {
-//                    return "Add New Entries for \(journal.title)"
-//                }
-//            }
-//        }
-//        return ""
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -180,22 +162,12 @@ class EntriesViewController: UITableViewController, UINavigationControllerDelega
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "EntryCell", for: indexPath)
-//        let entry = entries[indexPath.row]
-//        cell.textLabel?.text = entry.title
-//        cell.detailTextLabel?.textColor = .systemGray
-//        cell.detailTextLabel?.text = entry.date.monthDay() // custom method on Date
-//        return cell
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "DateEntryCell", for: indexPath) as! EntryDateTableViewCell // force unwrap okay??
-//        let entry = entries[indexPath.row]
-        // this seems VERY COMPUTATIONALLY expensive
         let entriesForYear = entries.filter( { $0.date.year() == years[indexPath.section] } )
         let entry = entriesForYear[indexPath.row]
         cell.entryLabel.text = entry.title
         cell.monthLabel.text = entry.date.month()
-        
-//        cell.dateButton.backgroundColor = .systemGray
         cell.dayLabel.text = entry.date.day()
         return cell
         
@@ -224,9 +196,6 @@ class EntriesViewController: UITableViewController, UINavigationControllerDelega
             let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {
                 [weak self] action, view, completion in
                 
-//                if let index = self?.journal?.entries.firstIndex(where: { $0.id == self?.journal?.entries[indexPath.row].id }) {
-//                    self?.journal?.entries.remove(at: index)
-//                }
                 if let entries = self?.entries {
                     self?.entries.remove(at: indexPath.row)
                     self?.journal?.entries = entries

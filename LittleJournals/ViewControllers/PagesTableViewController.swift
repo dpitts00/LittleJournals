@@ -32,7 +32,6 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
         super.viewDidLoad()
         
         if let entry = entry {
-            // version 2
             let titleText = entry.title
             let subtitleText = entry.date.monthDay()
             let titleAttributes: [NSAttributedString.Key : Any] = [
@@ -47,31 +46,15 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
             let subtitle = NSMutableAttributedString(string: subtitleText, attributes: subtitleAttributes)
             title.append(NSAttributedString(string: "\n"))
             title.append(subtitle)
-            // ??
-//            let width = view.frame.width // ??
-//            guard let height = navigationController?.navigationBar.frame.size.height else { return } // ??
+            
             let titleLabel = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.width, height: 44))
             titleLabel.backgroundColor = .clear
             titleLabel.attributedText = title
-//            titleLabel.textColor = bgColor
             titleLabel.numberOfLines = 2
             titleLabel.textAlignment = NSTextAlignment.center
-            
-            // version 1
-            /*
-            let titleLabel = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.width, height: 44))
-            titleLabel.backgroundColor = .clear
-            titleLabel.textColor = bgColor
-            titleLabel.numberOfLines = 2
-            titleLabel.textAlignment = NSTextAlignment.center
-            titleLabel.text = "\(entry.title) \n \(entry.date.monthDay())"
-            */
             self.navigationItem.titleView = titleLabel
-            
-//            title = entry.title + ": " + entry.date.monthDay()
         }
         
-//        view.backgroundColor = .systemGroupedBackground
         tableView.backgroundColor = bgColor
         tableView.estimatedRowHeight = UITableView.automaticDimension // why??
         
@@ -108,7 +91,6 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
         
     // called from .addTarget selector
     @IBAction func selectDate(_ sender: UIDatePicker) {
-        print("selectDate()")
         if let entry = entry {
             var newEntry = entry
             newEntry.date = sender.date
@@ -118,19 +100,13 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
     }
     
     @objc func changeEntryDate() {
-        print("changeEntryDate")
         isDateEditing = !isDateEditing
-//        tableView.insertSections([1], with: .automatic)
-        // should use insert/deleteSection but haven't
         tableView.reloadData()
         
     }
     
     @objc func doneEditing() {
-        print("doneEditing")
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-//        tableView.isUserInteractionEnabled = true
-//        savePage()
     }
     
     @objc func addPage() {
@@ -224,7 +200,6 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
     
     func saveText(editedPage: Page) {
         // this should save text to the selectedPage
-        print("saveText")
         if let index = entry?.pages.firstIndex(where: { $0.id == editedPage.id }) {
             entry?.pages[index] = editedPage
         } else {
@@ -239,12 +214,9 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
     }
     
     func savePage() {
-        print("savePage")
         if let indexPath = entryIndex {
-            print(indexPath)
             if let cell = tableView.cellForRow(at: indexPath) as? TextPageCell,
                let page = entry?.pages[indexPath.row] {
-                print("cell and page exist")
                 var editedPage = page
                 editedPage.text = cell.textView.text
                 saveText(editedPage: editedPage)
@@ -257,7 +229,6 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
     // MARK: Text view delegate methods
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        print("textViewDidBeginEditing")
         if textView.textColor == .placeholderText {
             textView.text = ""
             textView.textColor = .label
@@ -265,7 +236,6 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
     }
 
     func textViewDidEndEditing(_ textView: UITextView) {
-        print("textViewDidEndEditing")
         if textView.text == "" {
             textView.textColor = .placeholderText
         }
@@ -333,19 +303,6 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.backgroundColor = .white
-        /*
-        // masking to create space between all cells
-         let verticalPadding: CGFloat = 8.0
-         let maskLayer = CALayer()
-         maskLayer.cornerRadius = 12.0
-         maskLayer.backgroundColor = CGColor(red: 1, green: 1, blue: 1, alpha: 1)
-         maskLayer.frame = CGRect(x: cell.bounds.origin.x, y: cell.bounds.origin.y, width: cell.bounds.width, height: cell.bounds.height).insetBy(dx: 0, dy: verticalPadding / 2)
-         cell.layer.mask = maskLayer
-        */
-        
-        
-        
-
     }
 
 //    MARK: cellForRowAt()
@@ -383,23 +340,12 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
                 case "gallery":
                     reuseIdentifier = "GalleryCell"
                     text = nil
-                    // ***COME BACK HERE 1
                     gallery = page.gallery
-                    
-                    
-//                    if page.gallery != nil {
-//                        gallery = page.gallery
-//                        print("page.gallery != nil, gallery has \(page.gallery.count) items")
-//                    } else {
-//                        gallery = nil
-//                        print("page.gallery == nil")
-//                    }
                     
                 default:
                     reuseIdentifier = "TextCell"
                 }
             }
-            
             
             let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
             if let text = text,
@@ -427,9 +373,7 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
                 }
             }
             
-            // && gallery[0] != "" && gallery[1] != "" && gallery[2] != "" && gallery[3] != ""
             if !gallery.isEmpty {
-                // ***MADE IT HERE 3
                 
                 if let cell = cell as? GalleryPageCell {
                     cell.image1.image = nil
@@ -474,18 +418,14 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
         
         switch entry?.pages[indexPath.row].pageType {
             case "title":
-                print("click Title")
+                return
             case "text":
-                print("click Text")
-                
                 if let cell = tableView.cellForRow(at: indexPath) as? TextPageCell {
                     cell.textView.becomeFirstResponder()
                     entryIndex = indexPath
                 }
-                print(indexPath)
                 
             case "image":
-                print("click Image")
                 let imagePicker = UIImagePickerController()
                 imagePicker.allowsEditing = true
                 imagePicker.sourceType = .photoLibrary
@@ -493,96 +433,35 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
                 present(imagePicker, animated: true)
                 
             case "gallery":
-                print("click Gallery")
                 isGallery = true
                 galleryCellIndex = indexPath
                 
-                
-                
                 selectGridImage()
                 
-                // moved UIImagePicker down to action handler in selectGridImage()
-                
             default:
-                print("default")
+                return
             }
  
     }
     
-    func selectGridImage() {
-        let ac = UIAlertController(title: "Select a Grid Image", message: nil, preferredStyle: .actionSheet)
-        let topLeadingImage = UIAlertAction(title: "Image 1", style: .default) { _ in
-            self.galleryGridCell = 0
-            let imagePicker = UIImagePickerController()
-            imagePicker.allowsEditing = true
-            imagePicker.sourceType = .photoLibrary
-            imagePicker.delegate = self
-            self.present(imagePicker, animated: true)
-        }
-        let topTrailingImage = UIAlertAction(title: "Image 2", style: .default) { _ in
-            self.galleryGridCell = 1
-            let imagePicker = UIImagePickerController()
-            imagePicker.allowsEditing = true
-            imagePicker.sourceType = .photoLibrary
-            imagePicker.delegate = self
-            self.present(imagePicker, animated: true)
-        }
-        let bottomLeadingImage = UIAlertAction(title: "Image 3", style: .default) { _ in
-            self.galleryGridCell = 2
-            let imagePicker = UIImagePickerController()
-            imagePicker.allowsEditing = true
-            imagePicker.sourceType = .photoLibrary
-            imagePicker.delegate = self
-            self.present(imagePicker, animated: true)
-        }
-        let bottomTrailingImage = UIAlertAction(title: "Image 4", style: .default) { _ in
-            self.galleryGridCell = 3
-            let imagePicker = UIImagePickerController()
-            imagePicker.allowsEditing = true
-            imagePicker.sourceType = .photoLibrary
-            imagePicker.delegate = self
-            self.present(imagePicker, animated: true)
-        }
-        
-        let tlImage = UIImage(systemName: "square.grid.2x2")
-        let ttImage = UIImage(systemName: "square.grid.2x2")
-        let blImage = UIImage(systemName: "square.grid.2x2")
-        let btImage = UIImage(systemName: "square.grid.2x2")
-        topLeadingImage.setValue(tlImage, forKey: "image")
-        topTrailingImage.setValue(ttImage, forKey: "image")
-        bottomLeadingImage.setValue(blImage, forKey: "image")
-        bottomTrailingImage.setValue(btImage, forKey: "image")
-                
-        ac.addAction(topLeadingImage)
-        ac.addAction(topTrailingImage)
-        ac.addAction(bottomLeadingImage)
-        ac.addAction(bottomTrailingImage)
-        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        present(ac, animated: true)
-    }
+    
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
         let imageName = UUID().uuidString
         
-        // inserting for GalleryPageCell here
+        // for GalleryPageCell
         if isGallery {
             if let index = galleryCellIndex?.row {
-                print("cell index: ", index)
                 if let imageData = image.jpegData(compressionQuality: 0.8),
                    let entry = entry {
                     var page = entry.pages[index]
                     let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
                     let filename = imageName + ".jpeg"
                     let fullPath = documentsDirectory[0].appendingPathComponent(filename)
-                    // ***COME BACK HERE 2
-                    // it didn't append the filename to the gallery, still nil
-                    print("this is where it should append images...")
                     page.gallery[galleryGridCell] = filename
-                    print(page)
                     saveText(editedPage: page)
                     try? imageData.write(to: fullPath)
-                    print("Gallery images for cell: ", page.gallery.count)
                 }
             }
             tableView.reloadData()
@@ -591,39 +470,9 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
             return
         }
         
-        /* // ORIGINAL FOR GALLERY
-         if isGallery {
-             if let index = galleryCellIndex?.row {
-                 print("cell index: ", index)
-                 if let imageData = image.jpegData(compressionQuality: 0.8),
-                    let entry = entry {
-                     var page = entry.pages[index]
-                     let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-                     let filename = imageName + ".jpeg"
-                     let fullPath = documentsDirectory[0].appendingPathComponent(filename)
-                     // ***COME BACK HERE 2
-                     // it didn't append the filename to the gallery, still nil
-                     print("this is where it should append images...")
-                     page.gallery.append(filename)
-                     print(page)
-                     saveText(editedPage: page)
-                     try? imageData.write(to: fullPath)
-                     print("Gallery images for cell: ", page.gallery.count)
-                 }
-             }
-             tableView.reloadData()
-             dismiss(animated: true)
-             isGallery = false
-             return
-         }
-         */
-        
-        // this might not work, calling selectedRow
+        // for ImagePageCell
         let indexPath = tableView.indexPathForSelectedRow!
-//        currentImageView.image = image
-//        entry.pages[currentCell].images?.append(image)
         
-        // save the image to .documentsDirectory
         if let imageData = image.jpegData(compressionQuality: 0.8),
            let entry = entry {
             var page = entry.pages[indexPath.row]
@@ -632,56 +481,21 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
             let fullPath = documentsDirectory[0].appendingPathComponent(filename)
             page.image = filename
             page.text = nil
-            // the saveText method isn't working here
-            print(page)
             saveText(editedPage: page)
             try? imageData.write(to: fullPath)
         }
         
+        // this is unused
         imageAspectRatio = image.size.height / image.size.width
-        // maybe expand to imageAspectRatios.append() ??
         
-//        if let imageCell = tableView.cellForRow(at: indexPath) {
-//            imageCell.imageView?.image = image
-//            imageCell.imageView?.contentMode = .scaleAspectFit
-//        }
         tableView.reloadData()
         dismiss(animated: true)
     }
     
-    
-//    MARK: heightForRowAt()
-    /*
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//         setting height for textView doesn't work like this.
-       
-        if (isDateEditing && indexPath.section == 1) || (!isDateEditing && indexPath.section == 0) {
-            if entry?.pages[indexPath.row].pageType == "text" {
-                return UITableView.automaticDimension
-            }
-            if entry?.pages[indexPath.row].pageType == "image" {
-//                return (view.frame.width - 15 - 16 - 15 - 16) * imageAspectRatio + 32
-//                return tableView.frame.width - 62 * imageAspectRatio
-                return UITableView.automaticDimension // returns 0, why?
-            } else {
-                return UITableView.automaticDimension
-
-            }
-        }
-        return 60
-        
-        return UITableView.automaticDimension
-    }
- */
-    
-    // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
-            // This might be wrong...
-            // But it works on simulator.
             if let index = entry?.pages.firstIndex(where: { $0.id == entry?.pages[indexPath.row].id }) {
-                // deleting the image isn't working
+
                 if let imageName = entry?.pages[index].image {
                     let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
                     let filename = imageName + ".jpeg"
@@ -690,7 +504,7 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
                     try? fileManager.removeItem(at: fullPath)
                 }
                 entry?.pages.remove(at: index)
-                // ***ADDED THIS -- good or no???
+
                 if let entry = entry {
                     delegate.saveEntry(savedEntry: entry)
                     self.syncJournals()
@@ -700,16 +514,12 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
         }
     }
     
-    
-    // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
         var pages: [Page] = []
         if let entry = entry {
             pages = entry.pages
             let fromPage = entry.pages[fromIndexPath.row]
             let toPage = entry.pages[to.row]
-            print(fromPage)
-            print(toPage)
             
             for page in entry.pages {
                 if page == fromPage {
@@ -725,9 +535,7 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
         }
     }
 
-    // Override to support conditional rearranging of the table view.
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
         if (isDateEditing && indexPath.section == 0) || (!isDateEditing && indexPath.section == 1) {
             return false
         }
@@ -741,8 +549,4 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
         return true
     }
     
-    
-    
-    
-
 }

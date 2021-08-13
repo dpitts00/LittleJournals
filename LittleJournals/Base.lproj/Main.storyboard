@@ -3,6 +3,8 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -207,7 +209,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Vz-9c-6kb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="RuF-Pm-Yd1" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="6855.0724637681169" y="91.741071428571431"/>
+            <point key="canvasLocation" x="2658" y="92"/>
         </scene>
         <!--Journals Table View Controller-->
         <scene sceneID="Y4x-GK-Hrd">
@@ -364,7 +366,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QWM-pk-8mL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4902.898550724638" y="91.741071428571431"/>
+            <point key="canvasLocation" x="1954" y="92"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="81z-wj-F3k">
@@ -409,7 +411,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yej-hW-w9a" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3083" y="777"/>
+            <point key="canvasLocation" x="3383" y="92"/>
         </scene>
         <!--Info View Controller-->
         <scene sceneID="54b-4c-0HN">
@@ -533,16 +535,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="u33-FH-EYK"/>
-                    <connections>
-                        <outlet property="entriesScreenImageView" destination="EXY-xt-N54" id="MRr-Ed-EqK"/>
-                        <outlet property="gridScreenImageView" destination="o4s-v3-zee" id="8xb-oi-J9f"/>
-                        <outlet property="journalsScreenImageView" destination="NjR-13-xIK" id="yWU-ke-SPD"/>
-                        <outlet property="pagesScreenImageView" destination="ETU-2K-t9c" id="jH4-cD-AD6"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4C4-4D-sSx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3757.971014492754" y="91.741071428571431"/>
+            <point key="canvasLocation" x="1183" y="777"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="zE6-D7-XDY">
@@ -566,14 +562,139 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cUn-VL-0jK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2847.826086956522" y="91.741071428571431"/>
+            <point key="canvasLocation" x="380" y="777"/>
+        </scene>
+        <!--Edit View Controller-->
+        <scene sceneID="Ky4-g4-DYH">
+            <objects>
+                <viewController storyboardIdentifier="EditView" id="hH1-1t-NTc" customClass="EditViewController" customModule="LittleJournals" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Dnz-21-8w8">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="yVo-qk-tab">
+                                <rect key="frame" x="16" y="60" width="382" height="590"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Journal Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="52s-Hf-wOZ">
+                                        <rect key="frame" x="0.0" y="0.0" width="382" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="rXZ-fE-3dQ"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Cover Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CAi-e1-pyi">
+                                        <rect key="frame" x="0.0" y="52" width="382" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="vXi-wu-q8c"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="98B-Jg-Brb">
+                                        <rect key="frame" x="0.0" y="104" width="382" height="44"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4JE-3O-BuC">
+                                                <rect key="frame" x="0.0" y="0.0" width="8" height="44"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="8" id="PV8-5k-W3s"/>
+                                                </constraints>
+                                            </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cover Title Color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g3l-KL-nME">
+                                                <rect key="frame" x="8" y="0.0" width="330" height="44"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bzi-zq-s4I">
+                                                <rect key="frame" x="338" y="0.0" width="44" height="44"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="44" id="q9F-QE-J1r"/>
+                                                </constraints>
+                                                <state key="normal" image="circle.fill" catalog="system"/>
+                                                <connections>
+                                                    <action selector="colorButtonTapped:" destination="hH1-1t-NTc" eventType="touchUpInside" id="BKu-bX-aaF"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="jyP-QH-pbw"/>
+                                        </constraints>
+                                    </stackView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tkO-nN-sKR">
+                                        <rect key="frame" x="0.0" y="155" width="382" height="384"/>
+                                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <imageReference key="image" image="photo" catalog="system" symbolScale="large"/>
+                                    </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GV8-8c-Wq2">
+                                        <rect key="frame" x="0.0" y="546" width="382" height="44"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gBB-nU-og4">
+                                                <rect key="frame" x="0.0" y="0.0" width="8" height="44"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="8" id="fIY-X9-zf4"/>
+                                                </constraints>
+                                            </view>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="keK-DW-jdy">
+                                                <rect key="frame" x="8" y="0.0" width="374" height="44"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="uqh-AC-r1N"/>
+                                                </constraints>
+                                                <state key="normal" title=" Select a cover image..." image="photo" catalog="system">
+                                                    <color key="titleColor" name="AccentColor"/>
+                                                </state>
+                                                <state key="selected">
+                                                    <color key="titleColor" red="0.052549587289999998" green="0.238889517" blue="0.40216253219999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="selectImageTapped:" destination="hH1-1t-NTc" eventType="touchUpInside" id="8bv-kB-Cnn"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="tkO-nN-sKR" firstAttribute="height" secondItem="yVo-qk-tab" secondAttribute="width" multiplier="1:1" id="XuP-sd-DJW"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Ed5-4f-FFC"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="yVo-qk-tab" firstAttribute="top" secondItem="Ed5-4f-FFC" secondAttribute="top" constant="16" id="QfG-HW-kLP"/>
+                            <constraint firstItem="yVo-qk-tab" firstAttribute="leading" secondItem="Ed5-4f-FFC" secondAttribute="leading" constant="16" id="fsV-gO-2dQ"/>
+                            <constraint firstItem="Ed5-4f-FFC" firstAttribute="trailing" secondItem="yVo-qk-tab" secondAttribute="trailing" constant="16" id="gDa-w6-evz"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="OKX-4f-f7y"/>
+                    <connections>
+                        <outlet property="colorButton" destination="Bzi-zq-s4I" id="Ghg-JL-M5Q"/>
+                        <outlet property="colorStackView" destination="98B-Jg-Brb" id="Pqx-sJ-zQB"/>
+                        <outlet property="coverTextField" destination="CAi-e1-pyi" id="YGn-FX-31p"/>
+                        <outlet property="imageStackView" destination="GV8-8c-Wq2" id="c72-t5-8L1"/>
+                        <outlet property="imageView" destination="tkO-nN-sKR" id="ieK-20-RfX"/>
+                        <outlet property="selectImageButton" destination="keK-DW-jdy" id="75V-1U-FlB"/>
+                        <outlet property="titleTextField" destination="52s-Hf-wOZ" id="aRJ-DN-Alx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2fh-OH-doB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1954" y="777"/>
         </scene>
     </scenes>
     <resources>
+        <image name="circle.fill" catalog="system" width="128" height="121"/>
         <image name="entries-screen" width="375" height="311.5"/>
         <image name="grid-screen" width="375" height="641.5"/>
         <image name="journals-screen" width="375" height="311.5"/>
         <image name="pages-screen" width="375" height="648.5"/>
+        <image name="photo" catalog="system" width="128" height="93"/>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
