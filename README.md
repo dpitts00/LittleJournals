@@ -1,8 +1,8 @@
 # LittleJournals
-## LittleJournals app v0.4 (beta), iOS 14.0+.
-Written in Swift, using UIKit and locally-saved JSON for persistence.
+## LittleJournals app v1.0, iOS 14.0+.
+Written in Swift, using UIKit and locally- and iCloud-saved JSON for persistence and syncing between devices.
 
-### v0.4 Release Notes
+### v1.0 Release Notes
 
 This is the latest release of LittleJournals. Features are listed below by each image.
 
