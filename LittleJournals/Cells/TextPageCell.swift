@@ -22,7 +22,7 @@ class TextPageCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
-        backgroundColor = .systemGroupedBackground
+//        backgroundColor = .systemGroupedBackground
         
         // Configure the view for the selected state
     }
@@ -30,7 +30,8 @@ class TextPageCell: UITableViewCell {
     //    MARK: Text view methods -- Placeholder Text
         
         func textViewDidBeginEditing(_ textView: UITextView) {
-            if textView.textColor == UIColor.placeholderText {
+            // not .placeholderText
+            if textView.textColor == UIColor.lightGray {
                 textView.text = ""
                 textView.textColor = UIColor.label
             }
@@ -39,7 +40,7 @@ class TextPageCell: UITableViewCell {
         func textViewDidEndEditing(_ textView: UITextView) {
             if textView.text == "" {
                 textView.text = "Placeholder text"
-                textView.textColor = .placeholderText
+                textView.textColor = .lightGray
             }
         }
 

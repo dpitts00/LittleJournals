@@ -25,7 +25,7 @@ class EntryDateTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
         
-        dateStackView.layer.shadowColor = UIColor.systemGray3.cgColor
+        dateStackView.layer.shadowColor = UIColor(named: "date-view-shadow")?.cgColor
         dateStackView.layer.shadowOffset = CGSize(width: 1, height: 1)
         dateStackView.layer.shadowOpacity = 1
         dateStackView.layer.shadowRadius = 2

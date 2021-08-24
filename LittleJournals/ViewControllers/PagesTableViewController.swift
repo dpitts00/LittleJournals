@@ -13,7 +13,7 @@ protocol PagesTableViewControllerDelegate {
 
 class PagesTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
 
-    let bgColor = UIColor(red: 3/255, green: 110/255, blue: 125/255, alpha: 1.0)
+//    let bgColor = UIColor(red: 3/255, green: 110/255, blue: 125/255, alpha: 1.0)
 
     var entry: Entry?
     var delegate: PagesTableViewControllerDelegate!
@@ -33,29 +33,42 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
         
         if let entry = entry {
             let titleText = entry.title
-            let subtitleText = entry.date.monthDay()
-            let titleAttributes: [NSAttributedString.Key : Any] = [
-                .foregroundColor: bgColor,
-                .font: UIFont(name: "Avenir Next", size: 18)! // ! Fix
-            ]
-            let subtitleAttributes: [NSAttributedString.Key : Any] = [
-                .foregroundColor: bgColor,
-                .font: UIFont(name: "Avenir Next", size: 14)! // ! Fix
-            ]
-            let title = NSMutableAttributedString(string: titleText, attributes: titleAttributes)
-            let subtitle = NSMutableAttributedString(string: subtitleText, attributes: subtitleAttributes)
-            title.append(NSAttributedString(string: "\n"))
-            title.append(subtitle)
+//            let subtitleText = entry.date.monthDay()
             
-            let titleLabel = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.width, height: 44))
+            
+            let titleAttributes: [NSAttributedString.Key : Any] = [
+                .foregroundColor: UIColor(named: "blue-green") ?? UIColor(named: "AccentColor") ?? UIColor.label,
+//                .font: UIFont(name: "Avenir Next", size: 18)! // ! Fix
+            ]
+            /*
+            let subtitleAttributes: [NSAttributedString.Key : Any] = [
+                .foregroundColor: UIColor(named: "blue-green") ?? UIColor(named: "AccentColor") ?? UIColor.label,
+//                .font: UIFont(name: "Avenir Next", size: 14)! // ! Fix
+            ]
+             */
+            let title = NSMutableAttributedString(string: titleText, attributes: titleAttributes)
+//            let subtitle = NSMutableAttributedString(string: subtitleText, attributes: subtitleAttributes)
+//            title.append(NSAttributedString(string: "\n"))
+//            title.append(subtitle)
+
+            let titleLabel = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.width, height: 80))
             titleLabel.backgroundColor = .clear
             titleLabel.attributedText = title
             titleLabel.numberOfLines = 2
             titleLabel.textAlignment = NSTextAlignment.center
+            
+            let customTitleFont = UIFont.systemFont(ofSize: UIFont.labelFontSize, weight: .bold)
+            titleLabel.font = UIFontMetrics(forTextStyle: .headline).scaledFont(for: customTitleFont)
+            titleLabel.adjustsFontForContentSizeCategory = true
             self.navigationItem.titleView = titleLabel
+             
         }
         
-        tableView.backgroundColor = bgColor
+        tableView.backgroundColor = UIColor(named: "table-background")
+        navigationController?.navigationBar.tintColor = UIColor(named: "blue-green")
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.backgroundColor = UIColor(named: "blue-green")
+        
         tableView.estimatedRowHeight = UITableView.automaticDimension // why??
         
         
@@ -76,7 +89,7 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
         // adding toolbar to the bottom
         let calendarButton = UIBarButtonItem(image: UIImage(systemName: "calendar"), style: .plain, target: self, action: #selector(changeEntryDate))
         self.toolbarItems = [self.editButtonItem, spacer, calendarButton]
-        navigationController?.toolbar.tintColor = bgColor
+        navigationController?.toolbar.tintColor = UIColor(named: "blue-green")
         
     }
     
@@ -110,8 +123,10 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
     }
     
     @objc func addPage() {
-        let ac = UIAlertController(title: "Select a page type:", message: nil, preferredStyle: .actionSheet)
-        ac.addAction(UIAlertAction(title: "Text Page", style: .default) {
+        let ac = UIAlertController(title: "Select a Page Type", message: nil, preferredStyle: .actionSheet)
+        
+        
+        let newTextPage = UIAlertAction(title: "Text Page", style: .default) {
                 [weak self] action in
             let page = Page(id: UUID(), text: "", image: nil, pageType: "text")
             self?.entry?.pages.append(page)
@@ -129,9 +144,13 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
                 }
                 self?.tableView.scrollToRow(at: IndexPath(row: lastRow - 1, section: mainSection), at: .top, animated: true)
             }
-            
-        })
-        ac.addAction(UIAlertAction(title: "Image Page", style: .default) {
+        }
+        let textIcon = UIImage(systemName: "text.justifyleft")
+        newTextPage.setValue(textIcon, forKey: "image")
+        ac.addAction(newTextPage)
+        
+        
+        let newImagePage = UIAlertAction(title: "Image Page", style: .default) {
                 [weak self] action in
             let page = Page(id: UUID(), text: nil, image: nil, pageType: "image")
             self?.entry?.pages.append(page)
@@ -149,9 +168,13 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
                 }
                 self?.tableView.scrollToRow(at: IndexPath(row: lastRow - 1, section: mainSection), at: .top, animated: true)
             }
-        })
-        // NEW
-        ac.addAction(UIAlertAction(title: "Gallery Page", style: .default) {
+        }
+        ac.addAction(newImagePage)
+        let imageIcon = UIImage(systemName: "photo")
+        newImagePage.setValue(imageIcon, forKey: "image")
+        
+        
+        let newGalleryPage = UIAlertAction(title: "Gallery Page", style: .default) {
             [weak self] action in
             // ***COME BACK HERE 0 -- does the gallery mess anything up?
             let page = Page(id: UUID(), text: nil, image: nil, gallery: ["", "", "", ""], pageType: "gallery")
@@ -172,8 +195,20 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
                 self?.tableView.scrollToRow(at: IndexPath(row: lastRow - 1, section: mainSection), at: .top, animated: true)
             }
             // is that it?
-        })
-        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        }
+        let galleryIcon = UIImage(systemName: "square.grid.2x2")
+        newGalleryPage.setValue(galleryIcon, forKey: "image")
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        ac.addAction(newGalleryPage)
+        ac.addAction(cancel)
+        
+        // for iPad
+        let popover = ac.popoverPresentationController
+        popover?.sourceView = navigationController?.navigationBar
+        popover?.sourceRect = CGRect(x: view.frame.maxX - 64, y: -16, width: 64, height: 64)
+        
         present(ac, animated: true)
     }
     
@@ -284,7 +319,10 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let headerView = view as? UITableViewHeaderFooterView {
             headerView.textLabel?.textColor = .white
-            headerView.textLabel?.font = UIFont(name: "Avenir Next", size: 16)
+            if let font = headerView.textLabel?.font {
+                headerView.textLabel?.font = font.bold()
+            }
+//            headerView.textLabel?.font = UIFont(name: "Avenir Next", size: 16)
         }
     }
 
@@ -302,7 +340,7 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = .white
+        cell.backgroundColor = UIColor(named: "page-cell-bg") ?? .systemBackground
     }
 
 //    MARK: cellForRowAt()
@@ -323,7 +361,7 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
                     reuseIdentifier = "TextCell"
                     if page.text == "" {
                         text = "Write something!"
-                        textColor = .placeholderText
+                        textColor = .lightGray // not .placeholderText
                     } else {
                         text = page.text
                         textColor = .label
@@ -350,6 +388,7 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
             let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
             if let text = text,
                let cell = cell as? TextPageCell {
+                cell.textView.adjustsFontForContentSizeCategory = true
                 cell.textView?.text = text
                 cell.textView?.textColor = textColor
                 cell.textView.delegate = self // just added!
@@ -416,6 +455,8 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
 //    MARK: didSelectRowAt()
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        tableView.deselectRow(at: indexPath, animated: true)
+        
         switch entry?.pages[indexPath.row].pageType {
             case "title":
                 return
@@ -436,7 +477,7 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
                 isGallery = true
                 galleryCellIndex = indexPath
                 
-                selectGridImage()
+                selectGridImage(indexPath: indexPath)
                 
             default:
                 return
@@ -494,23 +535,44 @@ class PagesTableViewController: UITableViewController, UIImagePickerControllerDe
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            if let index = entry?.pages.firstIndex(where: { $0.id == entry?.pages[indexPath.row].id }) {
-
-                if let imageName = entry?.pages[index].image {
-                    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-                    let filename = imageName + ".jpeg"
-                    let fullPath = documentsDirectory[0].appendingPathComponent(filename)
+            
+            let ac = UIAlertController(title: "Delete Page", message: "Are you sure you want to delete this page?", preferredStyle: .alert)
+            let delete = UIAlertAction(title: "Delete", style: .destructive) {
+                _ in
+                
+                if let index = self.entry?.pages.firstIndex(where: { $0.id == self.entry?.pages[indexPath.row].id }) {
+                    
                     let fileManager = FileManager()
-                    try? fileManager.removeItem(at: fullPath)
-                }
-                entry?.pages.remove(at: index)
+                    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+                    
+                    if let imageName = self.entry?.pages[index].image {
+                        let filename = imageName + ".jpeg"
+                        let fullPath = documentsDirectory[0].appendingPathComponent(filename)
+                        try? fileManager.removeItem(at: fullPath)
+                    }
+                    
+                    if let imageGallery = self.entry?.pages[index].gallery {
+                        for imageName in imageGallery {
+                            let filename = imageName + ".jpeg"
+                            let fullPath = documentsDirectory[0].appendingPathComponent(filename)
+                            try? fileManager.removeItem(at: fullPath)
+                        }
+                    }
+                    
+                    self.entry?.pages.remove(at: index)
 
-                if let entry = entry {
-                    delegate.saveEntry(savedEntry: entry)
-                    self.syncJournals()
+                    if let entry = self.entry {
+                        self.delegate.saveEntry(savedEntry: entry)
+                        self.syncJournals()
+                    }
                 }
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                
             }
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+            ac.addAction(cancel)
+            ac.addAction(delete)
+            present(ac, animated: true)
         }
     }
     

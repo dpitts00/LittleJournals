@@ -22,6 +22,7 @@ class EditViewController: UIViewController, UINavigationControllerDelegate, UIIm
         colorPicker.delegate = self
         present(colorPicker, animated: true)
     }
+    @IBOutlet var colorButtonBG: UIButton!
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var selectImageButton: UIButton!
     @IBAction func selectImageTapped(_ sender: UIButton) {
@@ -38,7 +39,7 @@ class EditViewController: UIViewController, UINavigationControllerDelegate, UIIm
     
     var selectedColor: UIColor = .black
     
-    let bgColor = UIColor(red: 3/255, green: 110/255, blue: 125/255, alpha: 1.0)
+//    let bgColor = UIColor(red: 3/255, green: 110/255, blue: 125/255, alpha: 1.0)
     
     var journal: Journal?
     var delegate: EditViewControllerDelegate!
@@ -55,7 +56,11 @@ class EditViewController: UIViewController, UINavigationControllerDelegate, UIIm
         navigationItem.leftBarButtonItem = cancelButton
         navigationItem.rightBarButtonItem = saveButton
         
-        view.backgroundColor = bgColor
+        // checking colors
+        view.backgroundColor = UIColor(named: "table-background")
+        navigationController?.navigationBar.tintColor = UIColor(named: "blue-green")
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.backgroundColor = UIColor(named: "blue-green")
         
         colorStackView.layer.cornerRadius = 4.0
         imageStackView.layer.cornerRadius = 4.0
@@ -64,6 +69,7 @@ class EditViewController: UIViewController, UINavigationControllerDelegate, UIIm
         titleTextField.text = journal?.title
         coverTextField.text = journal?.coverTitle
         colorButton.tintColor = UIColor(red: journal?.red ?? 0, green: journal?.green ?? 0, blue: journal?.blue ?? 0, alpha: 1.0)
+        colorButtonBG.tintColor = UIColor.label
         
         if let image = journal?.coverImage {
             if !image.isEmpty {

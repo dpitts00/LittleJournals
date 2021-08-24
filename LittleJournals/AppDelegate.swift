@@ -14,6 +14,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        /*
+        let customFont = UIFont(name: "AvenirNext-DemiBold", size: UIFont.labelFontSize)
+
+        let titleAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor(named: "blue-green") ?? .label,
+            .font: UIFontMetrics(forTextStyle: .title1).scaledFont(for: customFont ?? UIFont.systemFont(ofSize: UIFont.labelFontSize))
+        ]
+        UINavigationBar.appearance().titleTextAttributes = titleAttributes
+         */
+        
+        if let customFont = UIFont(name: "AvenirNext-DemiBold", size: 20) {
+            let titleAttributesForSystemFont: [NSAttributedString.Key: Any] = [
+                .foregroundColor: UIColor(named: "blue-green") ?? .label,
+                .font: UIFontMetrics(forTextStyle: .headline).scaledFont(for: customFont)
+            ]
+            
+            UINavigationBar.appearance().titleTextAttributes = titleAttributesForSystemFont
+        }
+        
+//        let titleAttributesForSystemFont: [NSAttributedString.Key: Any] = [
+//            .foregroundColor: UIColor(named: "blue-green") ?? .label,
+//        ]
+//
+//        UINavigationBar.appearance().titleTextAttributes = titleAttributesForSystemFont
         return true
     }
 

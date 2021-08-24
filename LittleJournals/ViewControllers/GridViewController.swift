@@ -22,6 +22,8 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
     var coverTitle: String = ""
     var coverImage: String = ""
     
+    var bookButton = UIBarButtonItem()
+    
     static let sectionHeaderElementKind = "section-header"
     
     override func viewDidLoad() {
@@ -48,7 +50,7 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
         let listViewIcon = UIBarButtonItem(image: UIImage(systemName: "list.bullet"), style: .plain, target: self, action: #selector(displayList))
         let gridButton = UIBarButtonItem(image: UIImage(systemName: "square.grid.2x2"), style: .plain, target: self, action: #selector(displayGrid))
         let pageButton = UIBarButtonItem(image: UIImage(systemName: "book"), style: .plain, target: self, action: #selector(displayPage))
-        let bookButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(pickBookSize))
+        bookButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(pickBookSize))
         let spacer = UIBarButtonItem(systemItem: .flexibleSpace)
         toolbarItems = [listViewIcon, spacer, gridButton, spacer, pageButton, spacer, bookButton]
         
@@ -103,6 +105,12 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
             self.exportBook()
         })
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        // for iPad
+        let popover = ac.popoverPresentationController
+        popover?.sourceView = view
+        popover?.sourceRect = CGRect(x: view.frame.maxX - 64, y: view.frame.maxY - 32, width: 64, height: 64)
+        
         present(ac, animated: true)
     }
     
@@ -207,11 +215,7 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
             
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.5))
             var groupCount: Int {
-                if view.frame.width < 400 {
-                    return 2
-                } else {
-                    return 4
-                }
+                return 2
             }
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: groupCount)
             
@@ -229,11 +233,7 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
             
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(1.0))
             var groupCount: Int {
-                if view.frame.width < 400 {
                     return 1
-                } else {
-                    return 2
-                }
             }
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: groupCount)
             
@@ -259,7 +259,7 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
     func configureDataSource() {
         let textCellRegistration = UICollectionView.CellRegistration<PageTextCell, Page> { (cell, indexPath, page) in
             // cell = PageTextCell, page = Page
-            cell.backgroundColor = .systemBackground
+            cell.backgroundColor = UIColor(named: "page-cell-bg") ?? .systemBackground
             cell.label.text = page.text
             if self.appearance == "grid" {
                 cell.label.font = .systemFont(ofSize: 6)
@@ -271,13 +271,12 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
         
         let imageCellRegistration = UICollectionView.CellRegistration<PageImageCell, Page> { (cell, indexPath, page) in
             // cell = PageImageCell, page = Page
-            cell.backgroundColor = .systemBackground
+            cell.backgroundColor = UIColor(named: "page-cell-bg") ?? .systemBackground
             if let image = page.image {
                 let imageURL = self.getDocumentsDirectory().appendingPathComponent(image)
                 if let data = try? Data(contentsOf: imageURL) {
                     if let image = UIImage(data: data) {
                         cell.imageView.image = image
-                        // put the aspect ratio back
 //                        imageAspectRatio = image.size.height / image.size.width
                     }
                 }
@@ -286,12 +285,11 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
             cell.layer.cornerRadius = 12
         }
         
-        // HERE!***
         // MARK: galleryCellRegistration
         
         let galleryCellRegistration = UICollectionView.CellRegistration<PageGalleryCell, Page> { (cell, indexPath, page) in
             // cell = PageGalleryCell, page = page
-            cell.backgroundColor = .systemBackground
+            cell.backgroundColor = UIColor(named: "page-cell-bg") ?? .systemBackground
             if !page.gallery.isEmpty {
                 for (index, image) in page.gallery.enumerated() {
                     let imageURL = self.getDocumentsDirectory().appendingPathComponent(image)
@@ -309,7 +307,7 @@ class GridViewController: UIViewController, UICollectionViewDelegate {
         
         let coverCellRegistration = UICollectionView.CellRegistration<JournalCoverCell, Page> {
             (cell, indexPath, page) in
-            cell.backgroundColor = .systemBackground
+            cell.backgroundColor = UIColor(named: "page-cell-bg") ?? .systemBackground
             
             let imageURL = self.getDocumentsDirectory().appendingPathComponent(self.coverImage)
             if let data = try? Data(contentsOf: imageURL) {

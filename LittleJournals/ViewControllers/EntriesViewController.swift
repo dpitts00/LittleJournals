@@ -23,12 +23,17 @@ class EntriesViewController: UITableViewController, UINavigationControllerDelega
     var years: [Int] = []
     var sortedEntries: [Entry] = []
     
-    let bgColor = UIColor(red: 3/255, green: 110/255, blue: 125/255, alpha: 1.0)
+//    let bgColor = UIColor(red: 3/255, green: 110/255, blue: 125/255, alpha: 1.0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.backgroundColor = bgColor
+        tableView.backgroundColor = UIColor(named: "table-background")
+        navigationController?.navigationBar.tintColor = UIColor(named: "blue-green")
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.backgroundColor = UIColor(named: "blue-green")
+        
+        
         
         if let selectedJournal = journal {
             entries = selectedJournal.entries.sorted(by: { $0.date < $1.date })
@@ -43,7 +48,7 @@ class EntriesViewController: UITableViewController, UINavigationControllerDelega
         
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addEntry)),
-            UIBarButtonItem(image: UIImage(systemName: "square.grid.2x2"), style: .plain, target: self, action: #selector(displayGrid))
+            UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: #selector(displayGrid))
         ]
         
     }
@@ -145,7 +150,9 @@ class EntriesViewController: UITableViewController, UINavigationControllerDelega
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let headerView = view as? UITableViewHeaderFooterView {
             headerView.textLabel?.textColor = .white
-            headerView.textLabel?.font = UIFont(name: "Avenir Next", size: 16)
+            if let font = headerView.textLabel?.font {
+                headerView.textLabel?.font = font.bold()
+            }
 
         }
     }
@@ -167,8 +174,10 @@ class EntriesViewController: UITableViewController, UINavigationControllerDelega
         let entriesForYear = entries.filter( { $0.date.year() == years[indexPath.section] } )
         let entry = entriesForYear[indexPath.row]
         cell.entryLabel.text = entry.title
+//        cell.entryLabel.adjustsFontForContentSizeCategory = true
         cell.monthLabel.text = entry.date.month()
-        cell.dayLabel.text = entry.date.day()
+        cell.monthLabel.font = cell.monthLabel.font.bold()
+        cell.dayLabel.text = "\(entry.date.day())"
         return cell
         
     }
@@ -196,15 +205,25 @@ class EntriesViewController: UITableViewController, UINavigationControllerDelega
             let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {
                 [weak self] action, view, completion in
                 
-                if let entries = self?.entries {
-                    self?.entries.remove(at: indexPath.row)
-                    self?.journal?.entries = entries
-                    if let journal = self?.journal {
-                        self?.delegate.saveJournal(savedJournal: journal, entryIndex: 0)
+                let ac = UIAlertController(title: "Delete Entry", message: "Are you sure you want to delete this entry", preferredStyle: .alert)
+                let delete = UIAlertAction(title: "Delete", style: .destructive) {
+                    _ in
+                    if let entries = self?.entries {
+                        self?.entries.remove(at: indexPath.row)
+                        self?.journal?.entries = entries
+                        if let journal = self?.journal {
+                            self?.delegate.saveJournal(savedJournal: journal, entryIndex: 0)
+                        }
                     }
-                }
 
-                tableView.deleteRows(at: [indexPath], with: .fade)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                }
+                let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+                ac.addAction(cancel)
+                ac.addAction(delete)
+                self?.present(ac, animated: true)
+                
+                
             }
             
             renameAction.backgroundColor = .systemBlue

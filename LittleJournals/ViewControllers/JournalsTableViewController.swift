@@ -10,28 +10,33 @@ import UIKit
 class JournalsTableViewController: UITableViewController, EntriesViewControllerDelegate, EditViewControllerDelegate {
     
     var journals: [Journal] = []
-    let bgColor = UIColor(red: 3/255, green: 110/255, blue: 125/255, alpha: 1.0)
+//    let bgColor = UIColor(red: 3/255, green: 110/255, blue: 125/255, alpha: 1.0)
     let image = UIImage(named: "logo-graphic")
-        
+    
+    let customFont = UIFont(name: "AvenirNext-DemiBold", size: UIFont.systemFontSize)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.backgroundColor = bgColor
-        navigationController?.navigationBar.tintColor = bgColor
+        tableView.backgroundColor = UIColor(named: "table-background")
+        navigationController?.navigationBar.tintColor = UIColor(named: "blue-green")
         navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.backgroundColor = bgColor
+        navigationController?.navigationBar.backgroundColor = UIColor(named: "blue-green")
         
         title = "Little Journals"
+//        self.navigationController?.hidesBarsOnTap = true
         
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addJournal))
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "questionmark.circle"), style: .plain, target: self, action: #selector(showHelpScreen))
+        // messing with back button
+        navigationItem.backButtonTitle = ""
         
         loadSyncedJournals()
         
         loadJournals()
         
-        if journals.isEmpty {
+        if journals.isEmpty && !isFirstUse() {
             if let vc = storyboard?.instantiateViewController(withIdentifier: "InfoNavigationView") as? UINavigationController {
                 navigationController?.present(vc, animated: true, completion: nil)
             }
@@ -39,6 +44,16 @@ class JournalsTableViewController: UITableViewController, EntriesViewControllerD
         
         validateJournals()
         
+        
+    }
+    
+    func isFirstUse() -> Bool {
+        let defaults = UserDefaults.standard
+        if !defaults.bool(forKey: "notFirstUse") {
+            defaults.set(true, forKey: "notFirstUse")
+            return false
+        }
+        return true
     }
     
     @objc func showHelpScreen() {
@@ -95,8 +110,14 @@ class JournalsTableViewController: UITableViewController, EntriesViewControllerD
     
     override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         if let headerView = view as? UITableViewHeaderFooterView {
+//            headerView.textLabel?.textColor = UIColor(named: "header")
+//            guard let customFont = self.customFont else { fatalError("customFont not found.") }
+//            headerView.textLabel?.font = UIFontMetrics.default.scaledFont(for: customFont)
+//            headerView.textLabel?.adjustsFontForContentSizeCategory = true
             headerView.textLabel?.textColor = .white
-            headerView.textLabel?.font = UIFont(name: "Avenir Next", size: 16)
+            if let font = headerView.textLabel?.font {
+                headerView.textLabel?.font = font.bold()
+            }
         }
     }
     
@@ -128,7 +149,7 @@ class JournalsTableViewController: UITableViewController, EntriesViewControllerD
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let imageView = UIImageView()
         imageView.image = image
-        imageView.tintColor = .white
+        imageView.tintColor = UIColor(named: "header")
         return imageView
     }
 
@@ -138,7 +159,7 @@ class JournalsTableViewController: UITableViewController, EntriesViewControllerD
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // change to journals[indexPath.section]; AND ALL THE OTHER ONES in save methods
+
         let journal = journals[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "JournalCell", for: indexPath)
         cell.textLabel?.text = journal.title
@@ -173,11 +194,18 @@ class JournalsTableViewController: UITableViewController, EntriesViewControllerD
             let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {
                 [weak self] action, view, completion in
                 
-                // *** NEED AN ALERT BEFORE DELETING
+                let ac = UIAlertController(title: "Delete Journal", message: "Are you sure you want to delete this journal?", preferredStyle: .alert)
+                let delete = UIAlertAction(title: "Delete", style: .destructive) {
+                    _ in
+                    self?.journals.remove(at: indexPath.row)
+                    self?.saveJournals()
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                }
+                let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+                ac.addAction(cancel)
+                ac.addAction(delete)
+                self?.present(ac, animated: true)
                 
-                self?.journals.remove(at: indexPath.row)
-                self?.saveJournals()
-                tableView.deleteRows(at: [indexPath], with: .fade)
             }
             
             editAction.backgroundColor = .systemOrange
